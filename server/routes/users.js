@@ -1,22 +1,8 @@
 import express from "express";
 import passport from 'passport';
-import User from "../models/User.js";
-
-
-
+ import User from "../models/User.js";
 const router = express.Router();
 
-const ensureAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    res.status(401).json({ message: "Unauthorized" });
-  }
-};
-
-router.use(passport.initialize());
-router.use(passport.session()); // if using sessions
-router.use(ensureAuthenticated);
 
 router.post("/users", async (req, res) => {
   try {

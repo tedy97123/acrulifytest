@@ -4,18 +4,23 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
-import session from 'express-session'; // Added for session handling
-import passport from 'passport'; // Added for Passport
 
 // Import routes 
 import userRoutes from './routes/users.js';
 import descriptionRoutes from "./routes/description.js";
-import { oauthRouter } from './routes/okta.js'; // Renamed import for OAuth 2.0
- 
-/* CONFIGURATIONS */
-dotenv.config();
-const app = express();
 
+/* CONFIGURATIONS */
+require('dotenv').config();
+const app = express();
+const { auth } = require('express-openid-connect');
+const config = {
+    authRequired: false,
+    auth0Logout: true,
+    secret:'',
+    baseURL:'',
+    clientId:'',
+    issuerBaseURL:'',
+};
 
 // Use Helmet for general security headers
 app.use(helmet()); 
@@ -29,16 +34,8 @@ app.use(morgan("common"));
 // Parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-// Session setup
-app.use(session({ secret: '1234', resave: true, saveUninitialized: true }));
-
-// Passport initialization
-app.use(passport.initialize());
-app.use(passport.session());
-
+app.use(auth(config));
 // Mount routes
-app.use('/', oauthRouter); // OAuth 2.0 routes
 app.use('/users', userRoutes); // User routes
 
 // Mount other routes 

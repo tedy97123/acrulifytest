@@ -4,7 +4,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed439d46-575d-43db-91c7-83d7059b840d" name="Changes" comment="" />
+    <list default="true" id="ed439d46-575d-43db-91c7-83d7059b840d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/.eslintrc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/next-env.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/next.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/public/Witty_logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/public/next.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/public/thirteen.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/public/vercel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/_app.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/_document.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/api/hello.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/api/v1/financial/finance.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/api/v1/news/news.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/api/v1/socialMedia/facebook.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/api/v1/socialMedia/instagram.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/logout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/api/v1/socialMedia/reddit.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/api/v1/socialMedia/twitter.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/dashboard/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/pages/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/styles/Home.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/src/styles/globals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nextjs/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/okta.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/users.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,8 +48,18 @@
   <component name="ComposerSettings">
     <execution />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe" />
   <component name="ProjectColorInfo">{
@@ -37,9 +82,20 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font",
+    "ts.external.directory.path": "C:\\Users\\tedyy\\Desktop\\acrulify\\client\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.rcb.reactComponents" value="false" />
+        <entry key="com.haulmont.rcb.reactInspector" value="false" />
+      </map>
+    </option>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -51,21 +107,16 @@
       <workItem from="1707865306621" duration="7000" />
       <workItem from="1707865789077" duration="241000" />
       <workItem from="1707866147373" duration="351000" />
+      <workItem from="1707882717259" duration="15807000" />
+      <workItem from="1707948333646" duration="2058000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/springboot/src/main/java/com/AuthServer/security/SecurityApplication.java</url>
-          <line>20</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
