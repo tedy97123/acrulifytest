@@ -1,9 +1,11 @@
 import express from 'express';
 import passport from 'passport';
 import { Strategy as OAuth2Strategy } from 'passport-oauth2';
-import User from '../models/User.js'; // Assuming you have a User model
+import User from '../models/User.js';
+import dotenv from "dotenv"; // Assuming you have a User model
 
 const router = express.Router();
+dotenv.config();
 
 passport.use(new OAuth2Strategy({
     authorizationURL: 'https://provider.com/auth',

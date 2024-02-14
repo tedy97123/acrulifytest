@@ -20,8 +20,21 @@ const UserSchema = new Schema(
       password: {
       value:mongoose.Schema.Types.String 
       },
-      
-      }, 
+
+       descriptionIds: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Descriptions",
+      },
+    ],
+    
+      lineItemIds: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "LineItem",
+      },
+    ],
+    }, 
   }, 
   { timestamps: true } , { toJSON: { getters: true } }
 );
