@@ -16,18 +16,23 @@ const UserSchema = new Schema(
         // },
         firstName: {
             value: mongoose.Schema.Types.String,
+              required: true,
         },
         lastName: {
             value: mongoose.Schema.Types.String,
+            required: true,
         },
         totalTimeWorked: {
             value:mongoose.Schema.Types.Number,
+              required: true,
         },
         email: {
             value: mongoose.Schema.Types.String,
+              required: true,
         },
         password: {
             value: mongoose.Schema.Types.String,
+              required: true,
         }, 
         descriptionIds: [
             {
