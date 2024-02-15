@@ -13,7 +13,7 @@ const herokuURL = "https://acrulifytest-79506d9ff655.herokuapp.com/";
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: herokuURL  }),
   reducerPath: "main",
-  tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers"],
+  tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers","GetUsersLogin"],
   endpoints: (build) => ({
     getDescriptions: build.query<Array<GetDescriptionResponse>, void>({
       query: () => "description/descriptions",
@@ -35,7 +35,15 @@ export const api = createApi({
       }),
       invalidatesTags: ['CreateUsers'],
     }),
+      getUserLogin: build.mutation<Array<GetUserResponse>, any>({
+         query: (newUserData) => ({
+        url: 'users/create_users',
+        method: 'GET',
+        body: newUserData,
+      }),
+      invalidatesTags: ['GetUsersLogin'], 
+     }),
   }),
 });
 
-export const { useGetCurrentUserQuery, useGetDescriptionsQuery, useLazyGetDescriptionsQuery, useGetLineItemsQuery,usePostCreateNewUserMutation } = api
+export const { useGetCurrentUserQuery, useGetDescriptionsQuery, useLazyGetDescriptionsQuery, useGetLineItemsQuery,usePostCreateNewUserMutation,useGetUserLoginMutation } = api
