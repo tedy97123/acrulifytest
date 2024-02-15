@@ -9,7 +9,7 @@ router.post("/Login", async (req, res) => {
 
     const user = await User.find({'email':email  , 'password':password});
 
-    user : [] ?? res.status(404).json({ message: "User not found" });
+    user | [] ?? res.status(404).json({ message: "User not found" });
      
     res.status(200).json({message: "User Logged In"}) 
 
