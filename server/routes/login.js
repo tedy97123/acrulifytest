@@ -7,7 +7,7 @@ router.post("/Login", async (req, res) => {
    const { email, password } = req.body; 
   try {
     let user = await User.find({'email':email  , 'password':password});
-    user =  [] | null ? res.status(404).json({ message: "User not found" }) : res.status(200).json({message: "User Logged In"});
+    user =  [] | null ? res.status(200).json({message: "User Logged In"}) : res.status(404).json({ message: "User not found" })  
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
