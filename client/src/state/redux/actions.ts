@@ -1,17 +1,12 @@
-import { Products } from "../types";
+import { GetUserResponse } from "../types";
 
  
 
-export const EDIT_PRODUCT = 'EDIT_PRODUCT';
-export const VIEW_PRODUCT = 'VIEW_PRODUCT';
+export const USER_INFO = 'USER_INFO';
 
 
-export const editProduct = (product: Products[]) => ({
-  type: EDIT_PRODUCT,
-  payload: product,
+export const user = (userInfo: GetUserResponse[]) => ({
+  type: USER_INFO,
+  payload: userInfo,
 });
  
-export const viewProduct = (product:Products[]) => ({
-  type: VIEW_PRODUCT,
-  payload: product,
-});

@@ -27,16 +27,16 @@ export  default function Login() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    const newUserData = JSON.stringify(userData)
+     const newUserData = userData
     getUserLogin(newUserData).unwrap()
       .then((response: any) => {
-        console.log('User created:', response);
-        if(response.message === "User Logged In!"){
+        console.log('Sucess:', response.message);
+        if(response.message === "User Logged In"){
           navigate('/Dashboard')
         }
       })
       .catch((error: any) => {
-        console.error('Error creating user:', error);
+        console.error('Wrong Credentials:', error);
       });
   };
   return (
@@ -116,3 +116,7 @@ export  default function Login() {
       </Container>
   );
 }
+
+const mapDispatchToProps =  {
+  dispatchAddProduct: editProduct,
+};

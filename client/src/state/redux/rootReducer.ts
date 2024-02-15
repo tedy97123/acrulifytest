@@ -1,9 +1,9 @@
 // rootReducer.ts
 import { combineReducers } from 'redux';
-import productReducer from './reducers';
+import userReducer from './reducers';
 
 const rootReducer  = combineReducers({
-  products: productReducer,
+  products: userReducer,
   serializableCheck:false
 });
 

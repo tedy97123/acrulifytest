@@ -1,23 +1,19 @@
 // reducers.ts
-import { EDIT_PRODUCT, VIEW_PRODUCT } from './actions';
+import { USER_INFO } from './actions';
 
 const initialState = {
-  products: [], // Initialize products as an empty array or with any default values you need.
+  user: [], // Initialize products as an empty array or with any default values you need.
 };
 
-const productReducer = (state = initialState, action: any) => {
+const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case EDIT_PRODUCT:
+    case USER_INFO:
       return {
-        products: [...state.products, action.payload],
-      };
-    case VIEW_PRODUCT:
-      return {
-        products: action.payload, // Consider if you want to merge or replace existing products.
+        products: [...state.user, action.payload],
       };
     default:
       return state;
   }
 };
 
-export default productReducer;
+export default userReducer;

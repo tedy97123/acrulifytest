@@ -28,6 +28,9 @@ export interface GetLineItemResponse {
   updatedAt: string;
 }
 
+export interface response200 {
+  message: string;
+}
   
 export interface GetUserResponse {
   id: string;
