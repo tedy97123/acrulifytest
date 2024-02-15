@@ -1,26 +1,25 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
 import helmet from "helmet";
+import dotenv from 'dotenv';
 import morgan from "morgan";
-
+import { auth } from 'express-openid-connect';
 // Import routes 
 import userRoutes from './routes/users.js';
 import descriptionRoutes from "./routes/description.js";
-
+ 
 /* CONFIGURATIONS */
-require('dotenv').config();
+dotenv.config();
 const app = express();
-const { auth } = require('express-openid-connect');
-const config = {
-    authRequired: false,
-    auth0Logout: true,
-    secret:'',
-    baseURL:'',
-    clientId:'',
-    issuerBaseURL:'',
-};
+// const config = {
+//     authRequired: false,
+//     auth0Logout: true,
+//     secret:process.env.SECRET,
+//     baseURL:process.env.BASEURL,
+//     // clientId:process.env.CLIENT_ID,
+//     issuerBaseURL:process.env.ISSUER_BASEURL,
+// };
 
 // Use Helmet for general security headers
 app.use(helmet()); 
@@ -33,14 +32,17 @@ app.use(morgan("common"));
 
 // Parsing middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(auth(config));
+// will be able to handle nested data coming in through the query string from the url
+app.use(express.urlencoded({ extended: true }));
+// app.use(auth(config));
+
 // Mount routes
 app.use('/users', userRoutes); // User routes
-
-// Mount other routes 
 app.use("/description", descriptionRoutes);
-
+app.post('/dropDatabase', async function (req, res) {   
+  await mongoose.connection.db.dropDatabase();
+  res.send("deleted!")
+})
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 8000;
 const MONGO_URL = process.env.MONGO_URL; // Use environment variable for MongoDB URL

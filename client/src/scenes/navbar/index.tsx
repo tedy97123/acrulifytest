@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PixIcon from "@mui/icons-material/Pix";
 import { Box, Typography, useTheme } from "@mui/material";
 import FlexBetween from "@/components/FlexBetween";
-
+import LogoutIcon from '@mui/icons-material/Logout';
 type Props = {};
 
 const Navbar = (props: Props) => {
@@ -15,7 +15,7 @@ const Navbar = (props: Props) => {
       <FlexBetween gap="0.75rem">
         <PixIcon sx={{ fontSize: "28px" }} />
         <Typography variant="h4" fontSize="16px">
-          Finanseer
+          Acrulify Test
         </Typography>
       </FlexBetween>
 
@@ -23,29 +23,44 @@ const Navbar = (props: Props) => {
       <FlexBetween gap="2rem">
         <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
           <Link
-            to="/"
-            onClick={() => setSelected("dashboard")}
+            to="/Dashboard"
+            onClick={() => setSelected("Dashboard")}
             style={{
-              color: selected === "dashboard" ? "inherit" : palette.grey[700],
+              color: selected === "Dashboard" ? "inherit" : palette.grey[700],
               transform :"inherit",
               textDecoration: "inherit",
             }}
           >
-            dashboard
+            Dashboard
+          </Link>
+        </Box> 
+        <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
+          <Link
+            to="/Login"
+            onClick={() => setSelected("Login")}
+            style={{
+              color: selected === "Login" ? "inherit" : palette.grey[700],
+              transform :"inherit",
+              textDecoration: "inherit",
+            }}
+          >
+            Login
           </Link>
         </Box>
         <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
           <Link
-            to="/predictions"
-            onClick={() => setSelected("predictions")}
+            to="/Logout"
+            onClick={() => setSelected("logout")}
             style={{
-              color: selected === "predictions" ? "inherit" : palette.grey[700],
+              color: selected === "logout" ? "inherit" : palette.grey[700],
+              transform :"inherit",
               textDecoration: "inherit",
             }}
           >
-            predictions
+            <LogoutIcon/> 
           </Link>
-        </Box>
+        </Box>                
+  
       </FlexBetween>
     </FlexBetween>
   );

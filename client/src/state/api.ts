@@ -1,8 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
-  GetKpisResponse,
-  GetProductsResponse,
-  GetTransactionsResponse,
+   GetLineItemResponse,
+   GetDescriptionResponse,
+   GetUserResponse,
+   Month,
+   Day
 } from "./types";
 const localURL = "http://localhost:8000/";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -11,25 +13,29 @@ const herokuURL = "https://desolate-wave-21722-b91d139fdee7.herokuapp.com/";
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: localURL  }),
   reducerPath: "main",
-  tagTypes: ["Descriptions", "LineItem", "Okta","Users"],
+  tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers"],
   endpoints: (build) => ({
-    getKpis: build.query<Array<GetKpisResponse>, void>({
-      query: () => "kpi/kpis/",
+    getDescriptions: build.query<Array<GetDescriptionResponse>, void>({
+      query: () => "description/descriptions",
       providesTags: ["Descriptions"],
     }),
-    getProducts: build.query<Array<GetProductsResponse>, void>({
-      query: () => "product/products/",
+    getLineItems: build.query<Array<GetLineItemResponse>, void>({
+      query: () => "lineItems/lineItems/",
       providesTags: ["LineItem"],
     }),
-    getTransactions: build.query<Array<GetTransactionsResponse>, void>({
-      query: () => "transaction/transactions/",
-      providesTags: ["Okta"],
-    }),
-    getTransactions: build.query<Array<GetTransactionsResponse>, void>({
-      query: () => "users/users/",
+    getCurrentUser: build.query<Array<GetUserResponse>, void>({
+      query: () => "user/user/",
       providesTags: ["Users"],
+    }), 
+    postCreateNewUser: build.mutation<Array<GetUserResponse>, any>({
+      query: (newUserData) => ({
+        url: 'user/create_users',
+        method: 'POST',
+        body: newUserData,
+      }),
+      invalidatesTags: ['CreateUsers'],
     }),
   }),
 });
 
-export const { useGetKpisQuery, useGetProductsQuery, useGetTransactionsQuery  } = api
+export const { useGetCurrentUserQuery, useGetDescriptionsQuery, useLazyGetDescriptionsQuery, useGetLineItemsQuery,usePostCreateNewUserMutation } = api

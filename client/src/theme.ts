@@ -1,3 +1,5 @@
+import { Margin } from "@mui/icons-material";
+
 export const tokens = {
   grey: {
     100: "#f0f0f3",
@@ -44,6 +46,7 @@ export const tokens = {
   },
 };
 
+ 
 // mui theme settings
 export const themeSettings = {
   palette: {
@@ -66,14 +69,22 @@ export const themeSettings = {
     background: {
       default: tokens.background.main,
       light: tokens.background.light,
-    },
+    }, 
   },
+    button: {
+      fontFamily: ["Inter", "sans-serif"].join(","),
+      fontSize: 12,
+  }
+    ,
   typography: {
-    fontFamily: ["Inter", "sans-serif"].join(","),
-    fontSize: 12,
+      fontFamily: ["Inter", "sans-serif"].join(","),
+      fontSize: 12,
+
     h1: {
       fontFamily: ["Inter", "sans-serif"].join(","),
-      fontSize: 32,
+      fontSize: 52,
+      fontWeight: 800,      
+      color: tokens.grey[200],
     },
     h2: {
       fontFamily: ["Inter", "sans-serif"].join(","),

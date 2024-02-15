@@ -18,8 +18,7 @@ function TabNavigator({value}: tabNavigator) {
 >
   <Tab
     value="one"
-    label="Products"
- 
+    label="Products" 
   />
   <Tab value="two" label="Transactions" />
 </Tabs>
