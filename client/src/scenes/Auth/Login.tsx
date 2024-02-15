@@ -17,12 +17,13 @@ import { useGetUserLoginMutation } from '@/state/api';
 import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { currentUser } from '@/state/redux/actions';
+import { ValidatedUser } from '@/state/types';
 
  function Login() {
   const navigate = useNavigate();
   const [getUserLogin] = useGetUserLoginMutation();
   const dispatch = useDispatch();
-  const [userData, setUserData] = useState({})
+  const [returnedUserData, setreturnedUserData] = useState({})
   const {palette} = useTheme();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -35,11 +36,10 @@ import { currentUser } from '@/state/redux/actions';
     const newUserData = userData
     getUserLogin(newUserData).unwrap()
       .then((response: any) => {
-        console.log('Sucess:', response.message);
-        if(response.message === "User Logged In"){
-          setUserData(response.currentUser)
-          navigate('/Dashboard')
-        }
+          console.log(response)
+          setreturnedUserData(response)
+          console.log(returnedUserData)
+          navigate('/Dashboard') 
       })
       .catch((error: any) => {
         console.error('Wrong Credentials:', error);
@@ -49,11 +49,11 @@ import { currentUser } from '@/state/redux/actions';
    useEffect(() => {
       const action = {
       type: 'USER_INFO',
-      payload: userData,
+      payload: returnedUserData,
     };
     dispatch(action);
-  }, [userData, dispatch]); 
-  
+  }, [returnedUserData, dispatch]); 
+
   return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />

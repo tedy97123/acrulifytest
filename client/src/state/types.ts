@@ -44,27 +44,20 @@ export interface GetUserResponse {
   lastName: string;
   email: string;
   credentials: Object;
+  totalTimeWorked: number;
   descriptionIds:Array<string>;
   lineItemIds:Array<string>;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface ValidatedUser {
-  id: string;
-  _id: string;
-  __v: number;
-  // oauthId: number;
-  // accessToken: number;
-  // refreshToken: Array<string>;
+export interface currentUser {
   firstName: Array<string>; 
   lastName: string;
   email: string;
-  credentials: Object;
   descriptionIds:Array<string>;
   lineItemIds:Array<string>;
-  createdAt: string;
-  updatedAt: string;
+  totalTimeWorked: number;
 }
 
 export interface GetDescriptionResponse {

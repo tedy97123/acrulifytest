@@ -5,7 +5,9 @@ import {
    GetUserResponse,
    Month,
    Day,
-   response200
+   response200,
+   ValidatedUser,
+   currentUser
 } from "./types";
 const localURL = "http://localhost:8000/";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,7 +38,7 @@ export const api = createApi({
       }),
       invalidatesTags: ['CreateUsers'],
     }),
-      getUserLogin: build.mutation<Array<response200>, any>({
+      getUserLogin: build.mutation<Array<currentUser>, currentUser>({
         query: (UserData) => ({
         url: '/Login',
         method: 'POST',

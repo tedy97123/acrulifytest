@@ -9,7 +9,7 @@ router.post("/Login", async (req, res) => {
    let user = await User.findOne({'email':email  , 'password':password}); 
    if(!user){
        res.status(404).json({ message: "User not found" })
-   }else {
+   } else {
          const returnedUserObject = {
          "firstName": user.firstName,
          "lastName": user.lastName,
@@ -18,7 +18,7 @@ router.post("/Login", async (req, res) => {
          "descriptionIds": user.descriptionIds,
          "lineItemIds": user.lineItemIds,
       };
-      res.status(200).json({message: "User Logged In", curentUser:returnedUserObject}) 
+      res.status(200).json({currentUser:returnedUserObject}) 
    }
   } catch (error) {
     res.status(400).json({ message: error.message });
