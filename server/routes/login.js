@@ -6,9 +6,9 @@ const router = express.Router();
 router.post("/Login", async (req, res) => {
    const { email, password } = req.body; 
   try {
-    const user = await User.find({'email':email});
-    console.log(user['password'],user['email'] , email , password)
-    if (!user || user.email != email || user.password != password) {
+    const user = await User.find({'email':email , "$and" : 'password',password});
+   console.log(user)
+    if (!user) {
       return res.status(404).json({ message: "User not found" });
     } else {
       res.status(200).json({message: "User Logged In"})
