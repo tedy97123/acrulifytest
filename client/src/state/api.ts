@@ -38,7 +38,7 @@ export const api = createApi({
       getUserLogin: build.mutation<Array<GetUserResponse>, any>({
          query: (UserData) => ({
         url: 'users/getUser',
-        method: 'GET',
+        method: 'POST',
         body: UserData,
       }),
       invalidatesTags: ['GetUsersLogin'], 

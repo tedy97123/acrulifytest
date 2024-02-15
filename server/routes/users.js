@@ -24,25 +24,5 @@ router.post("/create_users", async (req, res) => {
   }
 });
 
-// search users by Id
-router.get("/getUser", async (req, res) => {
-   const { email, password } = req.body; 
-  try {
-    // search db for user with id from req from client
-    const user = await User.find({'email':email});
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    // truthys to validate 
-      if (email) user.email = email;
-      if (password) {
-        user.password = password;
-      }
-    const updatedUser = user;
-     res.status(200).json({message:"User Logged In!",user:updatedUser});
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
+ 
 export default router;
