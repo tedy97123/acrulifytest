@@ -39,7 +39,7 @@ router.get("/getUser", async (req, res) => {
         user.password = password;
       }
     // const updatedUser = await user.save();
-     res.status(200).json({message:"User Logged In!"}, user);
+     res.status(200).json({message:"User Logged In!",user});
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
