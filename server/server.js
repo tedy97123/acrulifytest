@@ -45,8 +45,8 @@ app.post('/dropDatabase', async function (req, res) {
 })
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 8000;
-const MONGO_URL = process.env.MONGO_URL; // Use environment variable for MongoDB URL
-console.log(MONGO_URL)
+const MONGO_URL =  'mongodb+srv://tedyyohanes97:Peeman200@cluster1.vs1vunz.mongodb.net/?retryWrites=true&w=majority'; // Use environment variable for MongoDB URL
+ 
 mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
