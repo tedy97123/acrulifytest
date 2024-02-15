@@ -36,10 +36,10 @@ export const api = createApi({
       invalidatesTags: ['CreateUsers'],
     }),
       getUserLogin: build.mutation<Array<GetUserResponse>, any>({
-         query: (newUserData) => ({
-        url: 'users/create_users',
+         query: (UserData) => ({
+        url: 'users/getUser',
         method: 'GET',
-        body: newUserData,
+        body: UserData,
       }),
       invalidatesTags: ['GetUsersLogin'], 
      }),
