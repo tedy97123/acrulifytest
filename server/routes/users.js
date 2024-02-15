@@ -26,8 +26,6 @@ router.post("/create_users", async (req, res) => {
 
 // search users by Id
 router.get("/getUser", async (req, res) => {
-  // req from client
-  // res from server to client
    const { email, password } = req.body; 
   try {
     // search db for user with id from req from client
@@ -41,8 +39,7 @@ router.get("/getUser", async (req, res) => {
         user.password = password;
       }
     // const updatedUser = await user.save();
-     res.status(200).json({message:"User Logged In!"});
-    res.status(200).json(user);    
+     res.status(200).json({message:"User Logged In!"}, user);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
