@@ -29,7 +29,7 @@ export const api = createApi({
     }), 
     postCreateNewUser: build.mutation<Array<GetUserResponse>, any>({
       query: (newUserData) => ({
-        url: 'user/create_users',
+        url: 'users/create_users',
         method: 'POST',
         body: newUserData,
       }),

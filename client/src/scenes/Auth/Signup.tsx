@@ -10,11 +10,13 @@ import Container from '@mui/material/Container';
 import { useTheme } from '@emotion/react';
 import { usePostCreateNewUserMutation } from '@/state/api';
 import {GetUserResponse} from '../../state/types';
+import { useNavigate, useRoutes } from 'react-router-dom';
 export  default function Signup() {
  
   const {palette} = useTheme();
   const [postCreateNewUser] = usePostCreateNewUserMutation();
   const [selected,setSelected] = React.useState("")
+   let navigate = useNavigate() 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,16 +29,17 @@ export  default function Signup() {
       password: data.get('password'),
     });
     const newUserData = JSON.stringify(userData)
-    // Call the mutation function with the user data
     postCreateNewUser(newUserData).unwrap()
       .then((response: any) => {
         console.log('User created:', response);
+        if(response != null || undefined){
+          navigate('/Login')
+        }
       })
       .catch((error: any) => {
         console.error('Error creating user:', error);
       });
 
-    console.log(newUserData);
   };
    return (
       <Container component="main" maxWidth="xs">

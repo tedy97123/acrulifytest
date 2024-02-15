@@ -12,17 +12,35 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useTheme } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
+import { usePostCreateNewUserMutation } from '@/state/api';
 
 export  default function Login() {
- 
+  const navigate = useNavigate();
+  const [postCreateNewUser] = usePostCreateNewUserMutation();
   const {palette} = useTheme();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const userData = ({
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
+      totalTimeWorked: 0 ,
       email: data.get('email'),
       password: data.get('password'),
     });
+    const newUserData = JSON.stringify(userData)
+    postCreateNewUser(newUserData).unwrap()
+      .then((response: any) => {
+        console.log('User created:', response);
+        if(response != null || undefined){
+          navigate('/Login')
+        }
+      })
+      .catch((error: any) => {
+        console.error('Error creating user:', error);
+      });
+
   };
   const [selected,setSelected] = React.useState("")
   return (
