@@ -27,7 +27,6 @@ router.post("/create_users", async (req, res) => {
 // search users by Id
 router.get("/getUser", async (req, res) => {
   // req from client
-  const { id } = req.body;
   // res from server to client
    const { email, password } = req.body; 
   try {
