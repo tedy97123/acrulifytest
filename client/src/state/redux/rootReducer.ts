@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import userReducer from './reducers';
 
 const rootReducer  = combineReducers({
-  products: userReducer,
+  currentUser: userReducer,
   serializableCheck:false
 });
 

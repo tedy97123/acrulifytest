@@ -28,11 +28,29 @@ export interface GetLineItemResponse {
   updatedAt: string;
 }
 
+
 export interface response200 {
   message: string;
 }
   
 export interface GetUserResponse {
+  id: string;
+  _id: string;
+  __v: number;
+  // oauthId: number;
+  // accessToken: number;
+  // refreshToken: Array<string>;
+  firstName: Array<string>; 
+  lastName: string;
+  email: string;
+  credentials: Object;
+  descriptionIds:Array<string>;
+  lineItemIds:Array<string>;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ValidatedUser {
   id: string;
   _id: string;
   __v: number;

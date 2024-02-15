@@ -15,7 +15,6 @@ export  default function Signup() {
  
   const {palette} = useTheme();
   const [postCreateNewUser] = usePostCreateNewUserMutation();
-  const [selected,setSelected] = React.useState("")
    let navigate = useNavigate() 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

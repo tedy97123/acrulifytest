@@ -42,9 +42,9 @@ const Row3 = ( ) => {
   );
 };
 
-const mapDispatchToProps =  {
-  dispatchAddProduct: editProduct,
-};
+// const mapDispatchToProps =  {
+//   dispatchAddProduct: editProduct,
+// };
 
-
-export default connect(null, mapDispatchToProps)(Row3);
+export default Row3;
+// export default connect(null, mapDispatchToProps)(Row3);

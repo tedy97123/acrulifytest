@@ -14,10 +14,15 @@ import Container from '@mui/material/Container';
 import { useTheme } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 import { useGetUserLoginMutation } from '@/state/api';
+import { useEffect, useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { currentUser } from '@/state/redux/actions';
 
-export  default function Login() {
+ function Login() {
   const navigate = useNavigate();
   const [getUserLogin] = useGetUserLoginMutation();
+  const dispatch = useDispatch();
+  const [userData, setUserData] = useState({})
   const {palette} = useTheme();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -27,11 +32,12 @@ export  default function Login() {
       email: data.get('email'),
       password: data.get('password'),
     });
-     const newUserData = userData
+    const newUserData = userData
     getUserLogin(newUserData).unwrap()
       .then((response: any) => {
         console.log('Sucess:', response.message);
         if(response.message === "User Logged In"){
+          setUserData(response.currentUser)
           navigate('/Dashboard')
         }
       })
@@ -39,6 +45,15 @@ export  default function Login() {
         console.error('Wrong Credentials:', error);
       });
   };
+
+   useEffect(() => {
+      const action = {
+      type: 'USER_INFO',
+      payload: userData,
+    };
+    dispatch(action);
+  }, [userData, dispatch]); 
+  
   return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -118,5 +133,7 @@ export  default function Login() {
 }
 
 const mapDispatchToProps =  {
-  dispatchAddProduct: editProduct,
+  dispatchCurrentUserInfo: currentUser,
 };
+
+export default connect(null, mapDispatchToProps)(Login);

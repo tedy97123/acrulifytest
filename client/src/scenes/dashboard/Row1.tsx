@@ -3,6 +3,7 @@ import FlexBetween from "@/components/FlexBetween";
 import { useTheme } from "@emotion/react";
 import {  Button, Typography } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
  
 interface clock {
   time: React.ReactNode;
@@ -20,7 +21,8 @@ const Row1 = () => {
     let currentTime = hours + ":" +  minutes + ":" + seconds
     setTime(currentTime) 
   }, 10)
-  
+  const {user} = useSelector((state:any) => state.rootReducer.currentUser)
+  console.log(user)
   return (
     <>  
       <BoxHeader
