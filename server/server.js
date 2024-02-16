@@ -8,7 +8,10 @@ import { auth } from 'express-openid-connect';
 // Import routes 
 import userRoutes from './routes/users.js';
 import descriptionRoutes from "./routes/description.js";
- import loginRoutes from "./routes/login.js"
+import loginRoutes from "./routes/login.js"
+import lineItemRoutes from "./routes/lineitem.js"
+
+  
 /* CONFIGURATIONS */
 dotenv.config();
 const app = express();
@@ -39,6 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 // Mount routes
 app.use('', loginRoutes); // User routes
 app.use('/users', userRoutes); // User routes
+app.use('/lineItem', lineItemRoutes); // User routes
 app.use("/description", descriptionRoutes);
 app.post('/dropDatabase', async function (req, res) {   
   await mongoose.connection.db.dropDatabase();
