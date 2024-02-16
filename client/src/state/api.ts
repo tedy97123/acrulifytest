@@ -3,11 +3,8 @@ import {
    GetLineItemResponse,
    GetDescriptionResponse,
    GetUserResponse,
-   Month,
-   Day,
-   response200,
-   ValidatedUser,
-   currentUser
+   currentUser,
+   clockedIn
 } from "./types";
 const localURL = "http://localhost:8000/";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,16 +13,16 @@ const herokuURL = "https://acrulifytest-79506d9ff655.herokuapp.com";
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: herokuURL  }),
   reducerPath: "main",
-  tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers","GetUsersLogin"],
+  tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers","GetUsersLogin","CreateClockedIn"],
   endpoints: (build) => ({
     getDescriptions: build.query<Array<GetDescriptionResponse>, void>({
       query: () => "/description/descriptions",
       providesTags: ["Descriptions"],
     }),
     getLineItems: build.query<Array<GetLineItemResponse>, void>({
-      query: () => "/lineItems/lineItems/",
-      providesTags: ["LineItem"],
-    }),
+      query: (email) => `/lineItem/findLineItem/${email}`,
+            providesTags: ["LineItem"],
+      }),
     getCurrentUser: build.query<Array<GetUserResponse>, void>({
       query: () => "/user/user/",
       providesTags: ["Users"],
@@ -38,7 +35,7 @@ export const api = createApi({
       }),
       invalidatesTags: ['CreateUsers'],
     }),
-      getUserLogin: build.mutation<Array<currentUser>, currentUser>({
+      getUserLogin: build.mutation<Array<currentUser>, any>({
         query: (UserData) => ({
         url: '/Login',
         method: 'POST',
@@ -46,6 +43,15 @@ export const api = createApi({
       }),
       invalidatesTags: ['GetUsersLogin'], 
      }),
+     postClockIn: build.mutation<Array<clockedIn>, any>({
+        query: (clockedInTime) => ({
+        url: '/lineItem/postLineItem',
+        method: 'POST',
+        body: clockedInTime,
+      }),
+      invalidatesTags: ['CreateClockedIn'], 
+     }),
+ 
   }),
 });
 

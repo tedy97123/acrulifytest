@@ -16,43 +16,42 @@ import { useNavigate } from 'react-router-dom';
 import { useGetUserLoginMutation } from '@/state/api';
 import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { currentUser } from '@/state/redux/actions';
-import { ValidatedUser } from '@/state/types';
+import {loggedInUser } from '@/state/redux/actions';
+import { currentUser } from '@/state/types';
 
  function Login() {
   const navigate = useNavigate();
   const [getUserLogin] = useGetUserLoginMutation();
   const dispatch = useDispatch();
   const [returnedUserData, setreturnedUserData] = useState({})
-  const {palette} = useTheme();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const userData = ({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    const newUserData = userData
-    getUserLogin(newUserData).unwrap()
-      .then((response: any) => {
-          console.log(response)
-          setreturnedUserData(response)
-          console.log(returnedUserData)
-          navigate('/Dashboard') 
-      })
-      .catch((error: any) => {
-        console.error('Wrong Credentials:', error);
-      });
+ const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+  const userData = {
+    email: data.get('email'),
+    password: data.get('password'),
   };
 
-   useEffect(() => {
-      const action = {
-      type: 'USER_INFO',
-      payload: returnedUserData,
-    };
-    dispatch(action);
-  }, [returnedUserData, dispatch]); 
+  getUserLogin(userData).unwrap()
+    .then((response: currentUser[]) => {
+      console.log(response);
+
+      // Check if the response is not empty
+      if (Object.keys(response).length !== 0) {
+        const action = {
+          type: 'USER_INFO',
+          payload: response,
+        };
+        dispatch(action);
+
+        navigate('/Dashboard', { replace: true });
+      }
+    })
+    .catch((error: any) => {
+      console.error('Wrong Credentials:', error);
+    });
+};
 
   return (
       <Container component="main" maxWidth="xs">
@@ -103,7 +102,7 @@ import { ValidatedUser } from '@/state/types';
               sx={{
                 ".MuiFormControlLabel-label": 
                 {
-                  color: palette.grey[300],
+                  color: 'white',
                   border: "none",
                 },
                 marginTop:"1rem"}}
@@ -116,6 +115,7 @@ import { ValidatedUser } from '@/state/types';
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={() => {}}
             >
               Sign In
             </Button>
@@ -133,7 +133,7 @@ import { ValidatedUser } from '@/state/types';
 }
 
 const mapDispatchToProps =  {
-  dispatchCurrentUserInfo: currentUser,
+  dispatchCurrentUserInfo: loggedInUser,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

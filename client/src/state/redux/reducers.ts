@@ -1,15 +1,22 @@
 // reducers.ts
-import { USER_INFO } from './actions';
+import { LOG_OUT, USER_INFO } from './actions';
 
 const initialState = {
-  user: [], // Initialize products as an empty array or with any default values you need.
+ currentUser: null, // When no user is logged in
 };
 
 const userReducer = (state = initialState, action: any) => {
+  console.log(action)
   switch (action.type) {
-    case USER_INFO:
+  case USER_INFO:
+    return {
+      ...state,
+      currentUser: action.payload, // Assuming payload contains user info
+    };
+  case LOG_OUT:
       return {
-        products: [...state.user, action.payload],
+        ...state,
+        currentUser: null, // Reset currentUser to null or initial state
       };
     default:
       return state;

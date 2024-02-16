@@ -1,7 +1,6 @@
 import BoxHeader from "@/components/BoxHeader";
 import DashboardBox from "@/components/DashboardBox";
 import { connect, useDispatch } from "react-redux";
-import { editProduct } from "@/state/redux/actions";
 import FlexBetween from "@/components/FlexBetween";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button/Button";

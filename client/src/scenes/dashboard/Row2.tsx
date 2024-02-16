@@ -1,29 +1,20 @@
 import BoxHeader from "@/components/BoxHeader";
 import DashboardBox from "@/components/DashboardBox";
 import FlexBetween from "@/components/FlexBetween";
-import { Padding } from "@mui/icons-material";
-import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import React, { useMemo } from "react";
-import {
-  Tooltip,
-  CartesianGrid,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Line,
-  PieChart,
-  Pie,
-  Cell,
-  ScatterChart,
-  Scatter,
-  ZAxis,
-} from "recharts";
-
- 
+import { useGetLineItemsQuery } from "@/state/api";
+import { Box  , useTheme } from "@mui/material";
+import { DataGrid, GridCellParams } from "@mui/x-data-grid";
+import { useSelector } from "react-redux";
+import { currentUser } from "@/state/types";
+import { skipToken } from "@reduxjs/toolkit/query";
 const Row2 = () => {
-  const {palette} = useTheme();
+ const { palette } = useTheme();
+  const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser);
+  let parseUser: any = Object.values(currentUser);
+  const email = parseUser[0]?.currentUser.email;
+  const isLoggedIn = email != null;
+  const { data: lineItemData } = useGetLineItemsQuery(isLoggedIn ? email : skipToken);
+  console.log(lineItemData)
 
     const LineItemColumns = [
     {
@@ -34,22 +25,26 @@ const Row2 = () => {
      {
       field:"startTime",
       headerName:"Clocked-In",
-      flex:1
+      flex:1,
+      renderCell: (params: GridCellParams) => `$${params.value}`,
     },
      {
       field:"stopTime",
       headerName:"Clocked-out",
-      flex:1
+      flex:1,
+      renderCell: (params: GridCellParams) => `$${params.value}`,
     },
     {
       field:"totalTimeWorked",
       headerName:"Total Time Worked",
-      flex:1
+      flex:1,
+     renderCell: (params: GridCellParams) => `$${params.value}`,
     },
     {
       field:"Descriptions",
       headerName:"Descriptions",
-      flex:1
+      flex:1,
+      renderCell: (params: GridCellParams) => `$${params.value}`,
     }
   ]
   return (
@@ -87,7 +82,8 @@ const Row2 = () => {
         rowHeight={35}
         hideFooter={true}
         columns={LineItemColumns} 
-        rows={[]}      
+        rows={lineItemData || []}      
+        getRowId={(row)=>row._id} 
           />
       </Box> 
     </DashboardBox>

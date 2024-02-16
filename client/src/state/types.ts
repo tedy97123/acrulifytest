@@ -40,10 +40,10 @@ export interface GetUserResponse {
   // oauthId: number;
   // accessToken: number;
   // refreshToken: Array<string>;
-  firstName: Array<string>; 
+  firstName: string; 
   lastName: string;
   email: string;
-  credentials: Object;
+  password: string;
   totalTimeWorked: number;
   descriptionIds:Array<string>;
   lineItemIds:Array<string>;
@@ -52,6 +52,7 @@ export interface GetUserResponse {
 }
 
 export interface currentUser {
+  rootReducer: any;
   firstName: Array<string>; 
   lastName: string;
   email: string;
@@ -69,5 +70,16 @@ export interface GetDescriptionResponse {
   userIds: Array<string>;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface clockedIn {
+  firstName: string; 
+  lastName: string;
+  email: string;
+  startTime: Date;
+  rate: number;
+  totalTimeWorked: number;
+  descriptionIds:Array<string>;
+  lineItemIds:Array<string>;
 }
  

@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { themeSettings } from "./theme";
 import Navbar from "@/scenes/navbar";
 import Dashboard from "@/scenes/dashboard";
-import Logout from "./scenes/Auth/Logout";
 import Login from "./scenes/Auth/Login";
 import Signup from "./scenes/Auth/Signup";
  
@@ -21,8 +20,7 @@ function App() {
           <Box width="100%" height="100%" padding="1rem 2rem 4rem 2rem">
             <Navbar />
             <Routes>  
-              <Route path="/Login" element={<Login />} />
-              <Route path="/Logout" element={<Logout />} /> 
+              <Route path="/" element={<Login />} />
               <Route path="/Dashboard" element={<Dashboard />} />
               <Route path="/Signup" element={<Signup />} />
             </Routes>
