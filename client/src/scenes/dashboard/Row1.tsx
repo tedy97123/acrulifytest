@@ -33,10 +33,10 @@ const Row1 = () => {
    function handleClockedIn() {
     setPunchInTime(time) 
      updatePunch({
-       'firstName':firstName,
+      'firstName':firstName,
       "startTime":time,
       "rate":20,
-      "date": new Date().getDate,
+      "date": new Date().getDate.toString(),
      }).unwrap()
     .then((response: any) => {
       console.log(response); 
