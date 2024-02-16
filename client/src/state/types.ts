@@ -85,7 +85,7 @@ export interface clockedIn {
  
 export interface createLineItem {
   firstName: string
-  startTime:Date;
+  startTime:string;
   rate:Number;
-  date: Date
+  date: () => Number
 }

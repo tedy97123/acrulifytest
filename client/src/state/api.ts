@@ -45,10 +45,10 @@ export const api = createApi({
       providesTags: ["LineItem"],
     }),
       createLineItems: build.mutation<Array<createLineItem>, any>({
-      query: (UserData) => ({
+      query: (timeData) => ({
       url: '/lineItem/createLineItem',
       method: 'POST',
-      body: UserData,
+      body: timeData,
     }),
     invalidatesTags: ['CreateLineItem'], 
     }),

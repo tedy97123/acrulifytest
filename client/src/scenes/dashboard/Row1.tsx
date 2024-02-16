@@ -4,14 +4,15 @@ import { useTheme } from "@emotion/react";
 import {  Button, Typography } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { currentUser } from "@/state/types";
+import { createLineItem, currentUser } from "@/state/types";
+ 
  
 const Row1 = () => {
    const {palette} = useTheme()
    const [time,setTime] = useState(Date)
    const [updatePunch] = useCreateLineItemsMutation();
    const [selected,setSelected] = useState("")
-  const [punchInTime, setPunchInTime] = useState({});
+  const [punchInTime, setPunchInTime] = useState("");
   const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser);
   let parseUser: any = Object.values(currentUser);
   const firstName = parseUser[0]?.currentUser.firstName;
@@ -30,16 +31,12 @@ const Row1 = () => {
    }, [punchInTime]);
 
    function handleClockedIn() {
-    const updatePuchData = {
-      'firstName':firstName,
-      "startTime":punchInTime,
-      "rate":20,
-      "date":punchInTime
-    }
-     setPunchInTime(time);
-     console.log(time)
+    setPunchInTime(time) 
      updatePunch({
-      updatePuchData
+       'firstName':firstName,
+      "startTime":time,
+      "rate":20,
+      "date": new Date().getDate,
      }).unwrap()
     .then((response: any) => {
       console.log(response); 

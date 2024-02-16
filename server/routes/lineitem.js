@@ -40,8 +40,14 @@ router.post('/createLineItem',async(req,res) => {
     });
       doc.id
       doc.lineItemIds
-      res.status(201).json({doc});
-    }
+      const filter2 = {'_id':doc.lineItemIds}
+     const update2 = {"startTime":startTime}
+      const doc2 = await LineItem.findOneAndUpdate(filter2, update2, {
+      new: true,
+      upsert: false   
+    })
+     res.status(201).json({doc,doc2});
+  }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
