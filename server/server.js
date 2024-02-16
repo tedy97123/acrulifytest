@@ -28,7 +28,12 @@ const app = express();
 app.use(helmet()); 
 
 // Enable CORS for local development
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:5173', // Allow only your frontend app domain
+  optionsSuccessStatus: 200 
+};
+
+app.use(cors(corsOptions));
 
 // Request logging
 app.use(morgan("common"));

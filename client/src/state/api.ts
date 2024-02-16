@@ -19,10 +19,10 @@ export const api = createApi({
       query: () => "/description/descriptions",
       providesTags: ["Descriptions"],
     }),
-    getLineItems: build.query<Array<GetLineItemResponse>, void>({
-      query: (email) => `/lineItem/findLineItem/${email}`,
-            providesTags: ["LineItem"],
-      }),
+    getLineItems: build.query<Array<GetLineItemResponse>, string>({
+      query: (email) => `/lineItem/findLineItem/?email=${encodeURIComponent(email)}`,
+      providesTags: ["LineItem"],
+    }),
     getCurrentUser: build.query<Array<GetUserResponse>, void>({
       query: () => "/user/user/",
       providesTags: ["Users"],
