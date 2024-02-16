@@ -14,7 +14,7 @@ const herokuURL = "https://acrulifytest-79506d9ff655.herokuapp.com";
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: herokuURL  }),
   reducerPath: "main",
-  tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers","GetUsersLogin","CreateClockedIn"],
+  tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers","GetUsersLogin","CreateClockedIn","CreateLineItem"],
   endpoints: (build) => ({
     getDescriptions: build.query<Array<GetDescriptionResponse>, void>({
       query: () => "/description/descriptions",
@@ -50,7 +50,7 @@ export const api = createApi({
       method: 'POST',
       body: UserData,
     }),
-    invalidatesTags: ['GetUsersLogin'], 
+    invalidatesTags: ['CreateLineItem'], 
     }),
      postClockOut: build.mutation<Array<clockedIn>, any>({
         query: (clockedInTime) => ({
