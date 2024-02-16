@@ -46,7 +46,7 @@ export const api = createApi({
     }),
       createLineItems: build.mutation<Array<createLineItem>, any>({
       query: (UserData) => ({
-      url: 'lineItem/createLineItem',
+      url: '/lineItem/createLineItem',
       method: 'POST',
       body: UserData,
     }),

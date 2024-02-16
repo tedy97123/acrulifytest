@@ -31,11 +31,12 @@ const Row1 = () => {
 
    function handleClockedIn() {
      setPunchInTime(time);
+     console.log(time)
      updatePunch({
       'firstName':firstName,
-      "startTime":time,
+      "startTime":punchInTime,
       "rate":20,
-      "date":time
+      "date":punchInTime
      }).unwrap()
     .then((response: any) => {
       console.log(response); 
