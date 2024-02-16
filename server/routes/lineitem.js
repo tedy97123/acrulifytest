@@ -30,6 +30,7 @@ router.post('/createLineItem',async(req,res) => {
     const user = await User.findOne({'firstName' : firstName}) 
     if(user){   
      const creationLineItem =  await LineItem.create({'startTime':startTime},{'rate':rate},{'date':date},{'userIds':user._id});
+     creationLineItem
      const newLineItem = await LineItem.find({'userIds':user._id});
      const filter = {'_id':user._id}
      const update = {"lineItemIds":newLineItem}
@@ -87,9 +88,8 @@ router.get('/findLineItem/:email', async (req, res) => {
   try {
     const { email } = req.params;
     const user = await User.findOne({ 'email': email });
-    console.log(user)
     if (user) {
-      const lineItemPerUser = await LineItem.find({ 'userIds': user.id });
+      const lineItemPerUser = await LineItem.find({'userIds': user.id });
       res.status(200).json(lineItemPerUser);
     } else {
       res.status(404).json({ message: "User not found." });

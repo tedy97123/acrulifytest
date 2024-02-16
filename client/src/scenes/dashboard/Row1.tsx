@@ -30,13 +30,16 @@ const Row1 = () => {
    }, [punchInTime]);
 
    function handleClockedIn() {
-     setPunchInTime(time);
-     console.log(time)
-     updatePunch({
+    const updatePuchData = {
       'firstName':firstName,
       "startTime":punchInTime,
       "rate":20,
       "date":punchInTime
+    }
+     setPunchInTime(time);
+     console.log(time)
+     updatePunch({
+      updatePuchData
      }).unwrap()
     .then((response: any) => {
       console.log(response); 
