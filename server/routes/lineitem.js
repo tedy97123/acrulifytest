@@ -30,6 +30,7 @@ router.post('/createLineItem',async(req,res) => {
     const user = await User.findOne({'firstName' : firstName}) 
     if(user){   
      const creationLineItem =  await LineItem.create({'startTime':startTime},{'rate':rate},{'date':date},{'userIds':user._id});
+     creationLineItem
      const newLineItem = await LineItem.find({'userIds':user._id});
      const filter = {'_id':user._id}
      const update = {"lineItemIds":newLineItem}
@@ -39,8 +40,14 @@ router.post('/createLineItem',async(req,res) => {
     });
       doc.id
       doc.lineItemIds
-      res.status(201).json({doc});
-    }
+      const filter2 = {'_id':doc.lineItemIds}
+     const update2 = {"startTime":startTime}
+      const doc2 = await LineItem.findOneAndUpdate(filter2, update2, {
+      new: true,
+      upsert: false   
+    })
+     res.status(201).json({doc,doc2});
+  }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -87,9 +94,8 @@ router.get('/findLineItem/:email', async (req, res) => {
   try {
     const { email } = req.params;
     const user = await User.findOne({ 'email': email });
-    console.log(user)
     if (user) {
-      const lineItemPerUser = await LineItem.find({ 'userIds': user.id });
+      const lineItemPerUser = await LineItem.find({'userIds': user.id });
       res.status(200).json(lineItemPerUser);
     } else {
       res.status(404).json({ message: "User not found." });

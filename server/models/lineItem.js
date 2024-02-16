@@ -5,8 +5,7 @@ const Schema = mongoose.Schema;
 const LineItemSchema = new Schema(
   {
     date: {
-      type: Date,
-      required: true,
+      type: String,
     },
       startTime: {
         type: Date,

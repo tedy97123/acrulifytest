@@ -87,5 +87,5 @@ export interface createLineItem {
   firstName: string
   startTime:string;
   rate:Number;
-  date: string
+  date: () => Number
 }
