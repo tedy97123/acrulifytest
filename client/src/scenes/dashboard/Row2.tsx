@@ -26,25 +26,25 @@ const Row2 = () => {
       field:"startTime",
       headerName:"Clocked-In",
       flex:1,
-      renderCell: (params: GridCellParams) => `$${params.value}`,
+      renderCell: (params: GridCellParams) => `${params.value}`,
     },
      {
       field:"stopTime",
       headerName:"Clocked-out",
       flex:1,
-      renderCell: (params: GridCellParams) => `$${params.value}`,
+      renderCell: (params: GridCellParams) => `${params.value}`,
     },
     {
       field:"totalTimeWorked",
       headerName:"Total Time Worked",
       flex:1,
-     renderCell: (params: GridCellParams) => `$${params.value}`,
+     renderCell: (params: GridCellParams) => `${params.value}`,
     },
     {
       field:"Descriptions",
       headerName:"Descriptions",
       flex:1,
-      renderCell: (params: GridCellParams) => `$${params.value}`,
+      renderCell: (params: GridCellParams) => `${params.value}`,
     }
   ]
   return (

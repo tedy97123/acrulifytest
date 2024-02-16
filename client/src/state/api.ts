@@ -4,7 +4,8 @@ import {
    GetDescriptionResponse,
    GetUserResponse,
    currentUser,
-   clockedIn
+   clockedIn,
+   createLineItem
 } from "./types";
 const localURL = "http://localhost:8000/";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -18,10 +19,6 @@ export const api = createApi({
     getDescriptions: build.query<Array<GetDescriptionResponse>, void>({
       query: () => "/description/descriptions",
       providesTags: ["Descriptions"],
-    }),
-    getLineItems: build.query<Array<GetLineItemResponse>, string>({
-      query: (email) => `/lineItem/findLineItem/${email}`,
-      providesTags: ["LineItem"],
     }),
     getCurrentUser: build.query<Array<GetUserResponse>, void>({
       query: () => "/user/user/",
@@ -43,7 +40,19 @@ export const api = createApi({
       }),
       invalidatesTags: ['GetUsersLogin'], 
      }),
-     postClockIn: build.mutation<Array<clockedIn>, any>({
+     getLineItems: build.query<Array<GetLineItemResponse>, string>({
+      query: (email) => `/lineItem/findLineItem/${email}`,
+      providesTags: ["LineItem"],
+    }),
+      createLineItems: build.mutation<Array<createLineItem>, any>({
+      query: (UserData) => ({
+      url: '/lineItem/createLineItem',
+      method: 'POST',
+      body: UserData,
+    }),
+    invalidatesTags: ['GetUsersLogin'], 
+    }),
+     postClockOut: build.mutation<Array<clockedIn>, any>({
         query: (clockedInTime) => ({
         url: '/lineItem/postLineItem',
         method: 'POST',
@@ -55,4 +64,4 @@ export const api = createApi({
   }),
 });
 
-export const { useGetCurrentUserQuery, useGetDescriptionsQuery, useLazyGetDescriptionsQuery, useGetLineItemsQuery,usePostCreateNewUserMutation,useGetUserLoginMutation } = api
+export const { useGetCurrentUserQuery, useGetDescriptionsQuery, useLazyGetDescriptionsQuery, useGetLineItemsQuery,usePostCreateNewUserMutation,useGetUserLoginMutation,useCreateLineItemsMutation } = api

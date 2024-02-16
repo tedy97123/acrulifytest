@@ -1,19 +1,20 @@
-import BoxHeader from "@/components/BoxHeader";
 import FlexBetween from "@/components/FlexBetween";
-import { currentUser } from "@/state/types";
+import { useCreateLineItemsMutation } from "@/state/api";
 import { useTheme } from "@emotion/react";
 import {  Button, Typography } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
+import { currentUser } from "@/state/types";
  
-interface clock {
-  time: React.ReactNode;
-}
 const Row1 = () => {
    const {palette} = useTheme()
    const [time,setTime] = useState(Date)
+   const [updatePunch] = useCreateLineItemsMutation();
    const [selected,setSelected] = useState("")
-  const [punchInTime, setPunchInTime] = useState("");
+  const [punchInTime, setPunchInTime] = useState({});
+  const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser);
+  let parseUser: any = Object.values(currentUser);
+  const firstName = parseUser[0]?.currentUser.firstName;
 
   useEffect(() => {
      const interval = setInterval(() => {
@@ -26,12 +27,24 @@ const Row1 = () => {
      }, 1000);
 
      return () => clearInterval(interval); // Clear the interval to avoid memory leaks
-   }, []);
+   }, [punchInTime]);
 
    function handleClockedIn() {
      setPunchInTime(time);
-     console.log(punchInTime)
-   }
+     updatePunch({
+      'firstName':firstName,
+      "startTime":time,
+      "rate":20,
+      "date":time
+     }).unwrap()
+    .then((response: any) => {
+      console.log(response); 
+    })
+    .catch((error: any) => {
+      console.error('Wrong Credentials:', error);
+    });
+    };
+ 
    return (
     <>  
     
@@ -63,10 +76,8 @@ const Row1 = () => {
           >
                   Punch Out
            </Button>
-      </FlexBetween>
- 
-        
-</>
+      </FlexBetween> 
+   </>
   );
 };
 

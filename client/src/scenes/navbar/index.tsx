@@ -13,8 +13,7 @@ const Navbar = (props: Props) => {
   const [selected, setSelected] = useState("dashboard");
   const dispatch = useDispatch();
   const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser);
-  const userbasicinfo: any = currentUser ? Object.values(currentUser) : [];
-  
+  const userbasicinfo: any = currentUser ? Object.values(currentUser) : []; 
   const isLoggedIn = Array.isArray(currentUser)  ? 
   userbasicinfo.length > 0 && userbasicinfo != null 
   : 
