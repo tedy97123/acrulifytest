@@ -83,3 +83,9 @@ export interface clockedIn {
   lineItemIds:Array<string>;
 }
  
+export interface createLineItem {
+  firstName: string
+  startTime:string;
+  rate:Number;
+  date: string
+}
