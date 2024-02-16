@@ -35,6 +35,7 @@ router.post('/postLineItem',async(req,res) => {
   }
 });
 
+
 // router.patch('/updateLineItem',async(req,res) => {  
 //   try{
 //     const {firstName , email , startTime , rate} = req.body
@@ -56,17 +57,20 @@ router.post('/postLineItem',async(req,res) => {
 //   }
 // });
 
-router.get('/findLineItem',async(req,res) => {  
-  try{
-    const { email } = req.body
-    const user = await User.findOne({'email' : email})
-    if(user){
-      const lineItemPerUser = await LineItem.find({'userIds':user.id})
-      res.status(201).json(lineItemPerUser);
+router.get('/findLineItem/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    const user = await User.findOne({ 'email': email });
+    if (user) {
+      const lineItemPerUser = await LineItem.find({ 'userIds': user.id });
+      res.status(200).json(lineItemPerUser);
+    } else {
+      res.status(404).json({ message: "User not found." });
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-})
+});
+
 
 export default router;

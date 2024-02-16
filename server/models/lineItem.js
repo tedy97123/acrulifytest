@@ -16,6 +16,10 @@ const LineItemSchema = new Schema(
         type: Date,
         default: null, // Or set a default date if required
       },
+      rate:{
+        type: Number,
+        deafault: null,
+      },
     userIds: [
       {
         type: mongoose.Schema.Types.ObjectId,
