@@ -13,8 +13,7 @@ const Row2 = () => {
   let parseUser: any = Object.values(currentUser);
   const email = parseUser[0]?.currentUser.email;
   const isLoggedIn = email != null;
-  const encodedEmail = encodeURIComponent(email);
-  const { data: lineItemData } = useGetLineItemsQuery(isLoggedIn ? encodedEmail : skipToken);
+  const { data: lineItemData } = useGetLineItemsQuery(isLoggedIn ? email : skipToken);
   console.log(lineItemData)
 
     const LineItemColumns = [
