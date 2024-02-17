@@ -11,32 +11,27 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useTheme } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
-import { useGetUserLoginMutation } from '@/state/api';
-import { useEffect, useState } from 'react';
+import {useGetUserLoginMutation } from '@/state/api';
 import { connect, useDispatch } from 'react-redux';
 import {loggedInUser } from '@/state/redux/actions';
-import { currentUser } from '@/state/types';
 
  function Login() {
   const navigate = useNavigate();
   const [getUserLogin] = useGetUserLoginMutation();
   const dispatch = useDispatch();
-  const [returnedUserData, setreturnedUserData] = useState({})
-
+  
  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
+ 
   const userData = {
     email: data.get('email'),
     password: data.get('password'),
-  };
-
+  }; 
+  
   getUserLogin(userData).unwrap()
-    .then((response: currentUser[]) => {
-      console.log(response);
-
+    .then((response: any) => {
       // Check if the response is not empty
       if (Object.keys(response).length !== 0) {
         const action = {
@@ -45,13 +40,13 @@ import { currentUser } from '@/state/types';
         };
         dispatch(action);
 
-        navigate('/Dashboard', { replace: true });
-      }
-    })
+        navigate('/Dashboard' );
+      }})
     .catch((error: any) => {
       console.error('Wrong Credentials:', error);
     });
 };
+ 
 
   return (
       <Container component="main" maxWidth="xs">
@@ -133,7 +128,7 @@ import { currentUser } from '@/state/types';
 }
 
 const mapDispatchToProps =  {
-  dispatchCurrentUserInfo: loggedInUser,
+  dispatchCurrentUserInfo: loggedInUser, 
 };
 
 export default connect(null, mapDispatchToProps)(Login);

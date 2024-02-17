@@ -4,17 +4,17 @@ import {
    GetDescriptionResponse,
    GetUserResponse,
    currentUser,
-   clockedIn,
-   createLineItem
+   createLineItem,
+   clockedOut
 } from "./types";
-const localURL = "http://localhost:8000/";
+const localURL = "http://localhost:8000";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const herokuURL = "https://acrulifytest-79506d9ff655.herokuapp.com";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: herokuURL  }),
   reducerPath: "main",
-  tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers","GetUsersLogin","CreateClockedIn","CreateLineItem"],
+  tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers","GetUsersLogin","UpdateClockedIn","CreateLineItem"],
   endpoints: (build) => ({
     getDescriptions: build.query<Array<GetDescriptionResponse>, void>({
       query: () => "/description/descriptions",
@@ -44,24 +44,23 @@ export const api = createApi({
       query: (email) => `/lineItem/findLineItem/${email}`,
       providesTags: ["LineItem"],
     }),
-      createLineItems: build.mutation<Array<createLineItem>, any>({
+    createLineItems: build.mutation<Array<GetLineItemResponse>, any>({
       query: (timeData) => ({
       url: '/lineItem/createLineItem',
       method: 'POST',
       body: timeData,
     }),
-    invalidatesTags: ['CreateLineItem'], 
     }),
-     postClockOut: build.mutation<Array<clockedIn>, any>({
-        query: (clockedInTime) => ({
-        url: '/lineItem/postLineItem',
-        method: 'POST',
-        body: clockedInTime,
+     postClockOut: build.mutation<Array<clockedOut>, any>({
+        query: (clockedOutInTime) => ({
+        url: '/lineItem/updateStopTime',
+        method: 'PATCH',
+        body: clockedOutInTime,
       }),
-      invalidatesTags: ['CreateClockedIn'], 
+      invalidatesTags: ['UpdateClockedIn'], 
      }),
  
   }),
 });
 
-export const { useGetCurrentUserQuery, useGetDescriptionsQuery, useLazyGetDescriptionsQuery, useGetLineItemsQuery,usePostCreateNewUserMutation,useGetUserLoginMutation,useCreateLineItemsMutation } = api
+export const { useGetCurrentUserQuery, useGetDescriptionsQuery, usePostClockOutMutation, useGetLineItemsQuery,usePostCreateNewUserMutation,useGetUserLoginMutation,useCreateLineItemsMutation } = api

@@ -1,6 +1,6 @@
 // rootReducer.ts
 import { combineReducers } from 'redux';
-import userReducer from './reducers';
+import {userReducer} from './reducers';
 
 const rootReducer  = combineReducers({
   currentUser: userReducer,

@@ -4,22 +4,29 @@ import PixIcon from "@mui/icons-material/Pix";
 import { Box, Typography, useTheme } from "@mui/material";
 import FlexBetween from "@/components/FlexBetween";
 import LogoutIcon from '@mui/icons-material/Logout';
-import { connect, useDispatch, useSelector } from "react-redux";
+import {  shallowEqual, useDispatch, useSelector } from "react-redux";
 import { currentUser } from "@/state/types";
 type Props = {};
 
 const Navbar = (props: Props) => {
   const { palette } = useTheme();
+
   const [selected, setSelected] = useState("dashboard");
+
   const dispatch = useDispatch();
+  
   const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser);
-  const userbasicinfo: any = currentUser ? Object.values(currentUser) : []; 
+  
+  console.log(currentUser) 
+  
   const isLoggedIn = Array.isArray(currentUser)  ? 
-  userbasicinfo.length > 0 && userbasicinfo != null 
+
+  currentUser.length > 0 && currentUser == null 
   : 
-  userbasicinfo[0] !== null && userbasicinfo[0] !== undefined;
+  currentUser !== null && currentUser !== undefined;
                   
   console.log(isLoggedIn)
+
 
   function handleLogout() {
     dispatch({ type: 'LOG_OUT' });
@@ -55,7 +62,7 @@ const Navbar = (props: Props) => {
               textDecoration: "inherit",
             }}
           >
-            {userbasicinfo[0]?.currentUser?.firstName + " " + userbasicinfo[0]?.currentUser?.lastName}
+            {currentUser?.currentUser?.firstName + " " + currentUser?.currentUser?.lastName}
           </Link>
         </Box> 
         <Box sx={{ "&:hover": { color: palette.primary[100] } }}>

@@ -9,11 +9,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useTheme } from '@emotion/react';
 import { usePostCreateNewUserMutation } from '@/state/api';
-import {GetUserResponse} from '../../state/types';
-import { useNavigate, useRoutes } from 'react-router-dom';
-export  default function Signup() {
- 
-  const {palette} = useTheme();
+import { useNavigate } from 'react-router-dom';
+
+
+
+ function Signup() { 
+  useTheme();
   const [postCreateNewUser] = usePostCreateNewUserMutation();
    let navigate = useNavigate() 
 
@@ -121,3 +122,5 @@ export  default function Signup() {
       </Container>
   );
 }
+
+export default Signup;
