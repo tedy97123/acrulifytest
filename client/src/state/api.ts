@@ -12,7 +12,7 @@ const localURL = "http://localhost:8000";
 const herokuURL = "https://acrulifytest-79506d9ff655.herokuapp.com";
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: localURL  }),
+  baseQuery: fetchBaseQuery({ baseUrl: herokuURL  }),
   reducerPath: "main",
   tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers","GetUsersLogin","UpdateClockedIn","CreateLineItem"],
   endpoints: (build) => ({
@@ -53,8 +53,8 @@ export const api = createApi({
     }),
      postClockOut: build.mutation<Array<clockedOut>, any>({
         query: (clockedOutInTime) => ({
-        url: '/lineItem/updateStoptTime',
-        method: 'POST',
+        url: '/lineItem/updateStopTime',
+        method: 'PATCH',
         body: clockedOutInTime,
       }),
       invalidatesTags: ['UpdateClockedIn'], 

@@ -53,7 +53,7 @@ function Row1 ()  {
     if (lineItemData && lineItemData.length > 0) {
       // Assuming the last item is the most recent one
       const mostRecentLineItem = lineItemData[lineItemData.length - 1];
-
+      console.log(mostRecentLineItem.id)
       // Update the most recent line item with the stopTime
       clockOut({
         'firstName': firstName,

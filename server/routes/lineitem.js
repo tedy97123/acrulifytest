@@ -15,10 +15,11 @@ router.get("/getLineItem", async (req, res) => {
 });
 
  
-router.patch("/findLineItem/:id", async (req, res) => {
+router.get("/findLineItem/:id", async (req, res) => {
   try {
-  const lineItemId = req.params
-  const lineItem = await LineItem.findById(lineItemId._id) 
+  const {id} = req.params
+  console.log(id)
+  const lineItem = await LineItem.findById(id) 
   res.status(200).json(lineItem); 
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -66,10 +67,9 @@ router.patch('/updateStartTime',async(req,res) => {
   }
 });
  
-router.patch('/updateStoptTime',async(req,res) => {  
+router.patch('/updateStopTime',async(req,res) => {  
   try{
     const { lineItemId,  stopTime , firstName  } = req.body
-    console.log(lineItemId)
     const user = await User.findOne({'firstName' : firstName}) 
      //create line item and update usermodel with lineItem Id
     if(user){    
@@ -89,9 +89,11 @@ router.patch('/updateStoptTime',async(req,res) => {
 router.get('/findLineItem/:email', async (req, res) => {
   try {
     const { email } = req.params;
+    console.log(email)
     const user = await User.findOne({ 'email': email });
+    console.log(user)
     if (user) {
-      const lineItems = await LineItem.find({ '_id': { $in: user.lineItemIds } });
+      const lineItems = await LineItem.find({ '_id':  user.lineItemIds } );
       res.status(200).json(lineItems); 
     } else {
       res.status(404).json({ message: 'User not found' });
