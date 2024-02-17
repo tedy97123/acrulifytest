@@ -15,7 +15,7 @@ const Row1 = () => {
   const [punchInTime, setPunchInTime] = useState("");
   const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser);
   let parseUser: any = Object.values(currentUser);
-  const firstName = parseUser[0]?.currentUser.firstName;
+  const firstName = JSON.stringify(parseUser[0]?.currentUser.firstName);
 
   useEffect(() => {
      const interval = setInterval(() => {
@@ -33,10 +33,10 @@ const Row1 = () => {
    function handleClockedIn() {
     setPunchInTime(time) 
      updatePunch({
-       'firstName':firstName,
+      'firstName':firstName,
       "startTime":time,
       "rate":20,
-      "date": new Date().getDate,
+      "date": new Date().getDate.toString(),
      }).unwrap()
     .then((response: any) => {
       console.log(response); 

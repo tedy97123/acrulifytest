@@ -5,14 +5,14 @@ const Schema = mongoose.Schema;
 const LineItemSchema = new Schema(
   {
     date: {
-      type: String,
+      type: Number,
     },
       startTime: {
-        type: Date,
+        type: String,
         default: null, // Or set a default date if required
       },
       stopTime: {
-        type: Date,
+        type: String,
         default: null, // Or set a default date if required
       },
       rate:{
