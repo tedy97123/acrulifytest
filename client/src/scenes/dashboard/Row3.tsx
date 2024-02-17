@@ -8,7 +8,7 @@ import { useTheme } from "@emotion/react";
 import { useState } from "react";
  
 const Row3 = ( ) => {
-  const {palette} = useTheme();
+   useTheme();
   const [selected,setSelected] = useState("")
   return (
   <>
@@ -28,7 +28,6 @@ const Row3 = ( ) => {
               onClick={() => setSelected("Submit")}
               style={{
               marginLeft:"21.5rem",
-              color: selected === "Submit" ? "inherit" : palette.grey[500],
               transform :"inherit",
               textDecoration: "inherit",
               fontSize:18

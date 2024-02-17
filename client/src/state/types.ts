@@ -19,15 +19,14 @@ export interface GetLineItemResponse {
   id: string;
   _id: string;
   __v: number;
-  date: Date;
-  startTime: number;
-  stopTime: number;
-  totalTimeWorked: number;
+  date: Number;
+  startTime: string;
+  stopTime: string;
+  rate:number;
   userIds: Array<string>;
   createdAt: string;
   updatedAt: string;
-}
-
+} 
 
 export interface response200 {
   message: string;
@@ -60,6 +59,17 @@ export interface currentUser {
   lineItemIds:Array<string>;
   totalTimeWorked: number;
 }
+export interface lineItems {
+  	_id: string,
+		startTime: string,
+		stopTime: string,
+		userIds:Array<string>
+		createdAt: string,
+		updatedAt:string,
+		rate: Number,
+		id: string
+	}
+ 
 
 export interface GetDescriptionResponse {
   id: string;
@@ -72,20 +82,15 @@ export interface GetDescriptionResponse {
   updatedAt: string;
 }
 
-export interface clockedIn {
-  firstName: string; 
-  lastName: string;
-  email: string;
-  startTime: Date;
-  rate: number;
-  totalTimeWorked: number;
-  descriptionIds:Array<string>;
-  lineItemIds:Array<string>;
+export interface clockedOut {
+ 	firstName:String,
+	lineItemId:String,
+	stopTime:String
 }
  
 export interface createLineItem {
   firstName: string
   startTime:string;
   rate:Number;
-  date: () => Number
+  date: Number
 }

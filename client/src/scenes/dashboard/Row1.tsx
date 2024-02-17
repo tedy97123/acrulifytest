@@ -1,36 +1,38 @@
 import FlexBetween from "@/components/FlexBetween";
-import { useCreateLineItemsMutation } from "@/state/api";
-import { useTheme } from "@emotion/react";
+import { useCreateLineItemsMutation, useGetLineItemsQuery, usePostClockOutMutation } from "@/state/api";
 import {  Button, Typography } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { createLineItem, currentUser } from "@/state/types";
- 
- 
-const Row1 = () => {
-   const {palette} = useTheme()
-   const [time,setTime] = useState(Date)
-   const [updatePunch] = useCreateLineItemsMutation();
-   const [selected,setSelected] = useState("")
-  const [punchInTime, setPunchInTime] = useState("");
-  const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser);
-  let parseUser: any = Object.values(currentUser);
-  const firstName = JSON.stringify(parseUser[0]?.currentUser.firstName);
+import { useEffect,  useState } from "react";
+import { shallowEqual, useSelector } from "react-redux";
+import {  currentUser , lineItems } from "@/state/types";
 
+ 
+function Row1 ()  {
+  const [time,setTime] = useState(Date)
+  const [updatePunch] = useCreateLineItemsMutation();
+  const [clockOut] = usePostClockOutMutation();
+  const [punchInTime, setPunchInTime] = useState("");
+  const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser,shallowEqual);
+  const firstName =  currentUser?.currentUser?.firstName;
+  const email = currentUser?.currentUser?.email;
+  const {data: lineItemData} = useGetLineItemsQuery(email)
+  
+ 
+  
   useEffect(() => {
-     const interval = setInterval(() => {
+      const interval = setInterval(() => {
        const date = new Date();
        const hours = date.getHours().toString().padStart(2, '0');
        const minutes = date.getMinutes().toString().padStart(2, '0');
        const seconds = date.getSeconds().toString().padStart(2, '0');
        const currentTime = `${hours}:${minutes}:${seconds}`;
-       setTime(currentTime);
-     }, 1000);
-
+       setTime(currentTime); 
+     }, 1000); 
      return () => clearInterval(interval); // Clear the interval to avoid memory leaks
    }, [punchInTime]);
-    const date =   Date.now()
+
+ 
    function handleClockedIn() {
+    const date =  Date.now() 
     setPunchInTime(time) 
      updatePunch({
       'firstName':firstName,
@@ -40,12 +42,35 @@ const Row1 = () => {
      }).unwrap()
     .then((response: any) => {
       console.log(response); 
-    })
+       
+     })
     .catch((error: any) => {
       console.error('Wrong Credentials:', error);
     });
     };
- 
+    function handleClockOut() {
+    // Ensure that lineItemData is not empty and sorted (if necessary)
+    if (lineItemData && lineItemData.length > 0) {
+      // Assuming the last item is the most recent one
+      const mostRecentLineItem = lineItemData[lineItemData.length - 1];
+
+      // Update the most recent line item with the stopTime
+      clockOut({
+        'firstName': firstName,
+        "stopTime": time,
+        'lineItemId': mostRecentLineItem.id // Use the ID of the most recent line item
+      }).unwrap()
+      .then((response: any) => {
+        console.log(response); 
+      })
+      .catch((error: any) => {
+        console.error('Error:', error);
+      });
+    } else {
+      console.error('No line items available to update');
+    }
+};
+
    return (
     <>  
     
@@ -56,9 +81,8 @@ const Row1 = () => {
       </FlexBetween> 
       <FlexBetween style={{marginRight:"17rem",marginLeft:"18rem"}}>
         <Button
-              onClick={() => {setSelected("PunchIn"); handleClockedIn();}}
+              onClick={handleClockedIn}
               style={{
-                color: selected === "PunchIn" ? "inherit" : palette.grey[500],
                 transform :"inherit",
                 textDecoration: "inherit",
                 fontSize:18
@@ -67,9 +91,8 @@ const Row1 = () => {
             Punch In
           </Button> 
           <Button
-            onClick={() => setSelected("PunchOut")}
+            onClick={handleClockOut}
             style={{
-              color: selected === "PunchOut" ? "inherit" : palette.grey[500],
               transform :"inherit",
               textDecoration: "inherit",
               fontSize:18
