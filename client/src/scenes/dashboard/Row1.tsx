@@ -29,14 +29,14 @@ const Row1 = () => {
 
      return () => clearInterval(interval); // Clear the interval to avoid memory leaks
    }, [punchInTime]);
-
+    const date =   Date.now()
    function handleClockedIn() {
     setPunchInTime(time) 
      updatePunch({
       'firstName':firstName,
       "startTime":time,
       "rate":20,
-      "date": new Date().getDate.toString(),
+      "date": date,
      }).unwrap()
     .then((response: any) => {
       console.log(response); 
