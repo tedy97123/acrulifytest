@@ -1,79 +1,90 @@
 import FlexBetween from "@/components/FlexBetween";
-import { useCreateLineItemsMutation, useGetLineItemsQuery, usePostClockOutMutation } from "@/state/api";
+import { useCreateLineItemsMutation, useGetLineItemsQuery, usePostClockInMutation, usePostClockOutMutation, usePostTotalWorkHoursMutation } from "@/state/api";
 import {  Button, Typography } from "@mui/material";
 import { useEffect,  useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
-import {  currentUser , lineItems } from "@/state/types";
+import {  currentUser  } from "@/state/types";
 
- 
-function Row1 ()  {
-  const [time,setTime] = useState(Date)
+ interface Row1Props {
+  time: string
+ }
+function Row1 ({ time }: Row1Props)  {
   const [updatePunch] = useCreateLineItemsMutation();
+  const [updatePunchInTime] = usePostClockInMutation()
   const [clockOut] = usePostClockOutMutation();
+  const [updateTotalWorkHours] = usePostTotalWorkHoursMutation()
   const [punchInTime, setPunchInTime] = useState("");
   const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser,shallowEqual);
   const firstName =  currentUser?.currentUser?.firstName;
-  const email = currentUser?.currentUser?.email;
-  const {data: lineItemData} = useGetLineItemsQuery(email)
-  
- 
-  
-  useEffect(() => {
-      const interval = setInterval(() => {
-       const date = new Date();
-       const hours = date.getHours().toString().padStart(2, '0');
-       const minutes = date.getMinutes().toString().padStart(2, '0');
-       const seconds = date.getSeconds().toString().padStart(2, '0');
-       const currentTime = `${hours}:${minutes}:${seconds}`;
-       setTime(currentTime); 
-     }, 1000); 
-     return () => clearInterval(interval); // Clear the interval to avoid memory leaks
-   }, [punchInTime]);
+  const id = currentUser?.currentUser?.id;
+  const {data: lineItemData} = useGetLineItemsQuery(id);  
 
- 
-   function handleClockedIn() {
-    const date =  Date.now() 
-    setPunchInTime(time) 
-     updatePunch({
-      'firstName':firstName,
-      "startTime":time,
-      "rate":20,
-      "date": date,
-     }).unwrap()
-    .then((response: any) => {
-      console.log(response); 
-       
-     })
-    .catch((error: any) => {
-      console.error('Wrong Credentials:', error);
+
+function handleClockedIn() {
+  const date = Date.now();
+  setPunchInTime(time);
+
+  // First API call to create the line item
+  updatePunch({
+    'id': id,
+    "rate": 20,
+    "date": date,
+    "startTime": time,
+  }).unwrap()
+  .then((response) => {
+
+    updatePunchInTime({
+      'userId': id,
+      "startTime": time,
+      'lineItemId':lineItemData.id,
+    }).unwrap()
+    .then((updateResponse) => {
+      console.log('Line item updated and clocked In:', updateResponse);
+    })
+    .catch((updateError) => {
+      console.error('Error updating line item:', updateError);
     });
-    };
-    function handleClockOut() {
-    // Ensure that lineItemData is not empty and sorted (if necessary)
-    if (lineItemData && lineItemData.length > 0) {
-      // Assuming the last item is the most recent one
-      const mostRecentLineItem = lineItemData[lineItemData.length - 1];
-      console.log(mostRecentLineItem.id)
+  })
+  .catch((error) => {
+    console.error('Error creating line item:', error);
+  });
+}
+  
+  
+ async  function handleClockOut() {
+  // Ensure that lineItemData is not empty
+  if (lineItemData && lineItemData.length > 0) {
+    // Get the most recent line item
+     const getNewLineItem = await lineItemData.slice(-1)
+      const mostRecentLineItem = getNewLineItem[0]
+     console.log("Hey im the most recent line item",mostRecentLineItem)
+    if (mostRecentLineItem.startTime) {
       // Update the most recent line item with the stopTime
       clockOut({
-        'firstName': firstName,
+        'userId': id,
         "stopTime": time,
-        'lineItemId': mostRecentLineItem.id // Use the ID of the most recent line item
+        'lineItemId': mostRecentLineItem.id  
       }).unwrap()
-      .then((response: any) => {
-        console.log(response); 
-      })
-      .catch((error: any) => {
-        console.error('Error:', error);
-      });
-    } else {
-      console.error('No line items available to update');
-    }
-};
+     .then((updateResponse) => {
+      console.log('Line item updated and clocked Out:', updateResponse);
+     updateTotalWorkHours({
+      'userId': id,
+      'lineItemId': mostRecentLineItem.id  ,
+    }).unwrap()
+    .then((updateResponse) => {
+      console.log('Line item updated and clocked In:', updateResponse);
+    }) 
+    .catch((updateError) => {
+      console.error('Error updating line item:', updateError);
+    }) 
+  })}
+  }
+ }  
+
+
 
    return (
-    <>  
-    
+    <>   
     <FlexBetween> 
         <Typography padding="1rem" marginLeft="28rem" variant="h1" mb="-0.1rem">
           {time}

@@ -50,8 +50,20 @@ app.use('/users', userRoutes); // User routes
 app.use('/lineItem', lineItemRoutes); // User routes
 app.use("/description", descriptionRoutes);
 app.post('/dropDatabase', async function (req, res) {   
-  await mongoose.connection.db.dropDatabase();
-  res.send("deleted!")
+  try {
+        // Get all collections
+        const collections = await mongoose.connection.db.collections();
+
+        // Iterate over each collection and delete all documents
+        for (const collection of collections) {
+            await collection.deleteMany({}); // Empty filter to match all documents
+        }
+
+        res.send("All documents in all collections deleted successfully");
+    } catch (error) {
+        console.error("Error deleting documents:", error);
+        res.status(500).send("Error deleting documents");
+    }
 })
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 8000;

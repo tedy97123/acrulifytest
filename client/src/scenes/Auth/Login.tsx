@@ -15,12 +15,15 @@ import { useNavigate } from 'react-router-dom';
 import {useGetUserLoginMutation } from '@/state/api';
 import { connect, useDispatch } from 'react-redux';
 import {loggedInUser } from '@/state/redux/actions';
+import { useState } from 'react';
+import FlexBetween from '@/components/FlexBetween';
 
  function Login() {
   const navigate = useNavigate();
   const [getUserLogin] = useGetUserLoginMutation();
   const dispatch = useDispatch();
-  
+    const [error,setError] = useState()
+
  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
@@ -43,7 +46,7 @@ import {loggedInUser } from '@/state/redux/actions';
         navigate('/Dashboard' );
       }})
     .catch((error: any) => {
-      console.error('Wrong Credentials:', error);
+      console.error('Wrong Credentials:', error); 
     });
 };
  
@@ -65,6 +68,11 @@ import {loggedInUser } from '@/state/redux/actions';
           <Typography variant="h1">
             Sign in
           </Typography>
+          <FlexBetween>
+            <Typography>
+            {error}
+            </Typography>
+          </FlexBetween>
           <Box 
           component="form" 
           onSubmit={handleSubmit} 

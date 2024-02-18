@@ -1,23 +1,25 @@
 import BoxHeader from "@/components/BoxHeader";
 import DashboardBox from "@/components/DashboardBox";
 import FlexBetween from "@/components/FlexBetween";
-import { useGetLineItemsQuery } from "@/state/api";
 import { Box  , useTheme } from "@mui/material";
 import { DataGrid, GridCellParams, GridEventListener } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { currentUser } from "@/state/types";
 import { useEffect, useState } from "react";
+import { useGetLineItemsQuery } from "@/state/api";
 
 const Row2 = () => {
  const { palette } = useTheme();
-  const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser);
- const email = currentUser?.currentUser?.email;
-  const { data: lineItemData } = useGetLineItemsQuery(email);
-  const [selected, setSelected] = useState(false);
-  const [FinalClickInfo,setFinalClickInfo] = useState();
-  const dispatch = useDispatch();
-  const [clickedRows, setClickedRows] = useState<any[]>([]);
-
+const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser);
+const userId = currentUser?.currentUser?.id;
+const [lineItemUpdated, setLineItemUpdated] = useState(false);
+const [selected, setSelected] = useState(false);
+const [FinalClickInfo,setFinalClickInfo] = useState();
+const dispatch = useDispatch();
+const firstName =  currentUser?.currentUser?.firstName;
+const [clickedRows, setClickedRows] = useState<any[]>([]);
+const { data: lineItems } = useGetLineItemsQuery(userId); 
+console.log(currentUser )
     const LineItemColumns = [
     {
       field:"id",
@@ -116,8 +118,8 @@ const Row2 = () => {
         rowHeight={35}
         hideFooter={true}
         columns={LineItemColumns} 
-        rows={lineItemData || []}      
-        getRowId={(row)=>row.id} 
+        rows={lineItems || []}      
+        getRowId={(row)=>row._id} 
          onCellClick={handleOnCellClick}
         checkboxSelection 
         disableColumnSelector        

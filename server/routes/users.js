@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../models/User.js";
+import LineItem from "../models/lineItem.js";
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ router.get("/getAllUsers", async(req,res) => {
   }
 });
 
-
+ 
 router.post("/create_users", async (req, res) => {
   try {
     console.log(req.body)
