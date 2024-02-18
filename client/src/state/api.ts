@@ -1,20 +1,24 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+// api.ts
+
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-   GetLineItemResponse,
-   GetDescriptionResponse,
-   GetUserResponse,
-   currentUser,
-   createLineItem,
-   clockedOut
+  GetLineItemResponse,
+  GetDescriptionResponse,
+  GetUserResponse,
+  currentUser,
+  createLineItem,
+  clockedOut,
+  updateTHW
 } from "./types";
+
 const localURL = "http://localhost:8000";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const herokuURL = "https://acrulifytest-79506d9ff655.herokuapp.com";
 
+
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: herokuURL  }),
-  reducerPath: "main",
-  tagTypes: ["Descriptions", "LineItem", "Month","Users","CreateUsers","GetUsersLogin","UpdateClockedIn","CreateLineItem"],
+  baseQuery: fetchBaseQuery({ baseUrl: localURL }),
+  reducerPath: "api",
+  tagTypes: ["Descriptions", "LineItem", "GetLineItems", "Month", "Users", "CreateUsers", "GetUsersLogin", "UpdateClockedIn", "CreateLineItem"],
   endpoints: (build) => ({
     getDescriptions: build.query<Array<GetDescriptionResponse>, void>({
       query: () => "/description/descriptions",
@@ -23,8 +27,8 @@ export const api = createApi({
     getCurrentUser: build.query<Array<GetUserResponse>, void>({
       query: () => "/user/user/",
       providesTags: ["Users"],
-    }), 
-    postCreateNewUser: build.mutation<Array<GetUserResponse>, any>({
+    }),
+     postCreateNewUser: build.mutation<Array<GetUserResponse>, any>({
       query: (newUserData) => ({
         url: '/users/create_users',
         method: 'POST',
@@ -40,27 +44,57 @@ export const api = createApi({
       }),
       invalidatesTags: ['GetUsersLogin'], 
      }),
-     getLineItems: build.query<Array<GetLineItemResponse>, string>({
-      query: (email) => `/lineItem/findLineItem/${email}`,
-      providesTags: ["LineItem"],
-    }),
-    createLineItems: build.mutation<Array<GetLineItemResponse>, any>({
+      getLineItems: build.query({
+      query: (id) => `/lineItem/findLineItemsByUserId/${id}`,
+      providesTags: (result) =>
+      result
+      ? [...result.map(({ id }) => ({ type: 'LineItem', id })), { type: 'LineItem', id: 'LIST' }]
+      : [{ type: 'LineItem', id: 'LIST' }],
+      }),
+    createLineItems: build.mutation<Array<GetLineItemResponse>, createLineItem>({
       query: (timeData) => ({
-      url: '/lineItem/createLineItem',
-      method: 'POST',
-      body: timeData,
+        url: '/lineItem/createLineItem',
+        method: 'POST',
+        body: timeData,
+      }),
+      invalidatesTags: ['LineItem'],
     }),
+  postClockIn: build.mutation<Array<clockedOut>, any>({
+      query: (clockInonTime) => ({
+        url: '/lineItem/updateStartTime',
+        method: 'PATCH',
+        body: clockInonTime,
+      }),
+      invalidatesTags: ['LineItem'], 
     }),
-     postClockOut: build.mutation<Array<clockedOut>, any>({
-        query: (clockedOutInTime) => ({
+    postClockOut: build.mutation<Array<clockedOut>, any>({
+      query: (clockedOutInTime) => ({
         url: '/lineItem/updateStopTime',
         method: 'PATCH',
         body: clockedOutInTime,
       }),
-      invalidatesTags: ['UpdateClockedIn'], 
-     }),
- 
+      invalidatesTags: ['LineItem'], 
+    }),
+    postTotalWorkHours: build.mutation<Array<updateTHW>, any>({
+      query: (timeData) => ({
+        url: '/lineItem/totalHours',
+        method: 'POST',
+        body: timeData,
+      }),
+      invalidatesTags: ['LineItem'],
+    }),
   }),
 });
 
-export const { useGetCurrentUserQuery, useGetDescriptionsQuery, usePostClockOutMutation, useGetLineItemsQuery,usePostCreateNewUserMutation,useGetUserLoginMutation,useCreateLineItemsMutation } = api
+// Export hooks for your endpoints
+export const { 
+  useGetDescriptionsQuery, 
+  useGetCurrentUserQuery, 
+  usePostCreateNewUserMutation,
+  useGetUserLoginMutation,
+  useGetLineItemsQuery,
+  useCreateLineItemsMutation,
+  usePostClockOutMutation,
+  usePostClockInMutation,
+  usePostTotalWorkHoursMutation
+} = api;

@@ -11,6 +11,7 @@ router.post("/Login", async (req, res) => {
        res.status(404).json({ message: "User not found" })
    } else {
          const returnedUserObject = {
+          'id': user.id,
          "firstName": user.firstName,
          "lastName": user.lastName,
          "totalTimeWorked": user.totalTimeWorked,

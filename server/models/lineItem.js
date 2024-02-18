@@ -15,6 +15,9 @@ const LineItemSchema = new Schema(
         type: String,
         default: null, // Or set a default date if required
       },
+      totalTimeWorked: {
+        type:String,
+      },
       rate:{
         type: Number,
         deafault: null,

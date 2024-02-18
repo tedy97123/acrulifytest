@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
  function Signup() { 
   useTheme();
   const [postCreateNewUser] = usePostCreateNewUserMutation();
-   let navigate = useNavigate() 
+    let navigate = useNavigate() 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,17 +28,17 @@ import { useNavigate } from 'react-router-dom';
       email: data.get('email'),
       password: data.get('password'),
     });
-    const newUserData = JSON.stringify(userData)
-    postCreateNewUser(newUserData).unwrap()
+     
+    postCreateNewUser(userData).unwrap()
       .then((response: any) => {
         console.log('User created:', response);
         if(response != null || undefined){
-          navigate('/Login')
+          navigate('/')
         }
       })
       .catch((error: any) => {
         console.error('Error creating user:', error);
-      });
+       });
 
   };
    return (
@@ -117,7 +117,7 @@ import { useNavigate } from 'react-router-dom';
             >
               Sign up
             </Button>
-          </Box>
+           </Box>
         </Box>
       </Container>
   );

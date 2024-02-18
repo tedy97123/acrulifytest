@@ -50,6 +50,11 @@ export interface GetUserResponse {
   updatedAt: string;
 }
 
+export interface updateTHW {
+    userId: string,
+    lineItemId: string  ,
+}
+
 export interface currentUser {
   rootReducer: any;
   firstName: Array<string>; 
@@ -83,14 +88,19 @@ export interface GetDescriptionResponse {
 }
 
 export interface clockedOut {
- 	firstName:String,
+ 	userId:String,
 	lineItemId:String,
 	stopTime:String
 }
+export interface clockIn {
+ 	userId:String,
+	lineItemId:String,
+	startTime:String
+}
  
 export interface createLineItem {
-  firstName: string
-  startTime:string;
+  id:string;
   rate:Number;
-  date: Number
+  date: Number;
+  startTime:String
 }
