@@ -114,7 +114,7 @@ import FlexBetween from '@/components/FlexBetween';
             </Button>
             <Grid container>
               <Grid item>
-                <Link onClick={handleSignup} href="/Signup" variant="body2">
+                <Link onClick={handleSignup} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
