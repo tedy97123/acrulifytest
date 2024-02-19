@@ -19,9 +19,17 @@ const LineItemSchema = new Schema(
         type:String,
       },
       rate:{
-        type: Number,
-        deafault: null,
+        type: String,
       },
+      totalEarnings:{
+       type: String, 
+      },
+    descriptionIds: [
+            {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: "Description",
+            },
+          ],
     userIds: [
       {
         type: mongoose.Schema.Types.ObjectId,

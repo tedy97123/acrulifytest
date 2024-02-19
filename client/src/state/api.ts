@@ -18,7 +18,7 @@ const herokuURL = "https://acrulifytest-79506d9ff655.herokuapp.com";
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: localURL }),
   reducerPath: "api",
-  tagTypes: ["Descriptions", "LineItem", "GetLineItems", "Month", "Users", "CreateUsers", "GetUsersLogin", "UpdateClockedIn", "CreateLineItem"],
+  tagTypes: ["Descriptions", "LineItem", "GetLineItems", "Month", "Users", "CreateUsers", "GetUsersLogin", "UpdateClockedIn", "CreateLineItem","description"],
   endpoints: (build) => ({
     getDescriptions: build.query<Array<GetDescriptionResponse>, void>({
       query: () => "/description/descriptions",
@@ -83,10 +83,17 @@ export const api = createApi({
       }),
       invalidatesTags: ['LineItem'],
     }),
+    postDescriptions: build.mutation<Array<updateTHW>, any>({
+      query: (description) => ({
+        url: '/description/updateDescription',
+        method: 'POST',
+        body: description,
+      }),
+      invalidatesTags: ['description'],
+    }),
   }),
 });
 
-// Export hooks for your endpoints
 export const { 
   useGetDescriptionsQuery, 
   useGetCurrentUserQuery, 
@@ -96,5 +103,6 @@ export const {
   useCreateLineItemsMutation,
   usePostClockOutMutation,
   usePostClockInMutation,
-  usePostTotalWorkHoursMutation
+  usePostTotalWorkHoursMutation,
+  usePostDescriptionsMutation
 } = api;

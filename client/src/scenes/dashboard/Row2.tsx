@@ -7,6 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { currentUser } from "@/state/types";
 import { useEffect, useState } from "react";
 import { useGetLineItemsQuery } from "@/state/api";
+import { Add } from "@mui/icons-material";
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const Row2 = () => {
  const { palette } = useTheme();
@@ -19,7 +22,6 @@ const dispatch = useDispatch();
 const firstName =  currentUser?.currentUser?.firstName;
 const [clickedRows, setClickedRows] = useState<any[]>([]);
 const { data: lineItems } = useGetLineItemsQuery(userId); 
-console.log(currentUser )
     const LineItemColumns = [
     {
       field:"id",
@@ -45,11 +47,17 @@ console.log(currentUser )
      renderCell: (params: GridCellParams) => `${params.value}`,
     },
     {
-      field:"Descriptions",
-      headerName:"Descriptions",
+      field:"rate",
+      headerName:"Rate",
       flex:1,
-      renderCell: (params: GridCellParams) => `${params.value}`,
-    }
+     renderCell: (params: GridCellParams) => `$${params.value}/hr`,
+    },
+      {
+      field:"totalEarnings",
+      headerName:"Gross",
+      flex:1,
+     renderCell: (params: GridCellParams) => `$${params.value}`,
+    }, 
   ]
   
   const handleOnCellClick: GridEventListener<'rowClick'> = (
@@ -88,10 +96,13 @@ console.log(currentUser )
     <DashboardBox sx={{ marginTop: "50px"}} gridArea="e">
       <FlexBetween>
       <BoxHeader
-          title="LineItems"
-          subtitle="Time Sheet"
-          sideText={""}   
-        />
+            title="LineItems"
+            subtitle="Time Sheet"
+            addIcon={<Add />}
+            editIcon={<EditIcon />}
+            viewIcon={<VisibilityIcon />}
+            sideText={""}       
+              />
       </FlexBetween> 
       <Box
       mt="0.5rem"
