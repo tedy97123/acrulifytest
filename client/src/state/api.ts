@@ -47,9 +47,7 @@ export const api = createApi({
       getLineItems: build.query({
       query: (id) => `/lineItem/findLineItemsByUserId/${id}`,
       providesTags: (result) =>
-      result
-      ? [...result.map(({ id }) => ({ type: 'LineItem', id })), { type: 'LineItem', id: 'LIST' }]
-      : [{ type: 'LineItem', id: 'LIST' }],
+      result 
       }),
     createLineItems: build.mutation<Array<GetLineItemResponse>, createLineItem>({
       query: (timeData) => ({
