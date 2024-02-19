@@ -17,20 +17,11 @@ const Navbar = (props: Props) => {
   
   const currentUser = useSelector((state: currentUser) => state.rootReducer.currentUser);
   
-  console.log(currentUser) 
-  
-  const isLoggedIn = Array.isArray(currentUser)  ? 
-
-  currentUser.length > 0 && currentUser == null 
-  : 
-  currentUser !== null && currentUser !== undefined;
-                  
-  console.log(isLoggedIn)
-
+  const isLoggedIn = currentUser && currentUser.currentUser;
 
   function handleLogout() {
     dispatch({ type: 'LOG_OUT' });
-    setSelected("Login"); // Reset selected state
+    setSelected("Login");  
   }
   
   return (

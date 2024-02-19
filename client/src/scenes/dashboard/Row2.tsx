@@ -67,30 +67,24 @@ const { data: lineItems } = useGetLineItemsQuery(userId);
   setFinalClickInfo(params.row); 
   const info = JSON.stringify(params.row);
   const n_Info = JSON.parse(info);
-  const isDuplicate = clickedRows.some(row => row._id === n_Info._id); // Assuming there's an ID property to check uniqueness
-    console.log(isDuplicate)
-  // If not a duplicate, update clickedRows state
+  const isDuplicate = clickedRows.some(row => row._id === n_Info._id);  
  setClickedRows(prevRows => {
-  // Check if the row already exists in clickedRows to avoid duplicates
-  const isDuplicate = prevRows.some(row => row._id === n_Info._id); // Assuming there's an ID property to check uniqueness
+  const isDuplicate = prevRows.some(row => row._id === n_Info._id);  
   if (!isDuplicate) {
-    // If it's not a duplicate, concatenate the new row with the existing rows
     return [...prevRows, n_Info];
   } else {
-    // If it's a duplicate, return the existing state without modification
     return prevRows;
   }
 })};
 
  useEffect(() => {
-    // Dispatch action with clickedRows as payload whenever clickedRows changes
+     
     const action = {
       type: 'VIEW_LINE',
       payload: clickedRows,
     };
     dispatch(action);
-  }, [clickedRows, dispatch]); // Dispatch the action whenever clickedRows changes
-
+  }, [clickedRows, dispatch]);  
   return (
   <>  
     <DashboardBox sx={{ marginTop: "50px"}} gridArea="e">
