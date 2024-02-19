@@ -24,6 +24,11 @@ import FlexBetween from '@/components/FlexBetween';
   const dispatch = useDispatch();
   const [error,setError] = useState()
 
+
+  function handleSignup(){
+   navigate('/SignUp' );
+  }
+
  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
@@ -32,7 +37,7 @@ import FlexBetween from '@/components/FlexBetween';
     email: data.get('email'),
     password: data.get('password'),
   }; 
-  
+
   getUserLogin(userData).unwrap()
     .then((response: any) => {
       // Check if the response is not empty
@@ -68,10 +73,7 @@ import FlexBetween from '@/components/FlexBetween';
           <Typography variant="h1">
             Sign in
           </Typography>
-          <FlexBetween>
-            <Typography>
-            {error}
-            </Typography>
+          <FlexBetween> 
           </FlexBetween>
           <Box 
           component="form" 
@@ -101,18 +103,6 @@ import FlexBetween from '@/components/FlexBetween';
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              sx={{
-                ".MuiFormControlLabel-label": 
-                {
-                  color: 'white',
-                  border: "none",
-                },
-                marginTop:"1rem"}}
-              control={<Checkbox sx={{color:"white"}} value="remember" color="primary" />}
-              label="Remember me"
-              
-            />
             <Button 
               type="submit"
               fullWidth
@@ -124,7 +114,7 @@ import FlexBetween from '@/components/FlexBetween';
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/Signup" variant="body2">
+                <Link onClick={handleSignup} href="/Signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
