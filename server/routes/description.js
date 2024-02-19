@@ -30,14 +30,11 @@ router.post("/updateDescription", async (req, res) => {
   try {
     const { lineItemId, descriptionText } = req.body;
 
-    // Step 1: Create a new description
     const newDescription = new Description({ workDescription: descriptionText });
     const savedDescription = await newDescription.save();
 
-    // Step 2: Obtain the new description ID
     const newDescriptionId = savedDescription._id;
 
-    // Step 3: Update the LineItem with the new description ID
     const updatedLineItem = await LineItem.findByIdAndUpdate(
       lineItemId, 
       { $push: { descriptionIds: newDescriptionId } },  

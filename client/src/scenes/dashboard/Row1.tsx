@@ -36,7 +36,6 @@ const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 function handleClockedIn() {
   const date = Date.now();
   setPunchInTime(time);
-  // First API call to create the line item
   updatePunch({
     'id': id,
     "rate": rate,
@@ -65,7 +64,6 @@ function handleClockedIn() {
  
 
  async  function handleClockOut() {
-  // Ensure that lineItemData is not empty
   if (lineItemData && lineItemData.length > 0) {
     // Get the most recent line item
      const getNewLineItem = await lineItemData.slice(-1)
