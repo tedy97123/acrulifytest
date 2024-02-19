@@ -13,10 +13,13 @@ import {
 
 const localURL = "http://localhost:8000";
 const herokuURL = "https://acrulifytest-79506d9ff655.herokuapp.com";
-
+interface LineItem {
+  type: 'LineItem';
+  id: string;
+}
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: herokuURL }),
+  baseQuery: fetchBaseQuery({ baseUrl: localURL }),
   reducerPath: "api",
   tagTypes: ["Descriptions", "LineItem", "GetLineItems", "Month", "Users", "CreateUsers", "GetUsersLogin", "UpdateClockedIn", "CreateLineItem","description"],
   endpoints: (build) => ({
@@ -47,7 +50,9 @@ export const api = createApi({
       getLineItems: build.query({
       query: (id) => `/lineItem/findLineItemsByUserId/${id}`,
       providesTags: (result) =>
-      result 
+        result
+      ? [...result.map(({ id }: { id: string | number }): LineItem => ({ type: 'LineItem', id: id.toString() })), { type: 'LineItem', id: 'LIST' }]
+      : [{ type: 'LineItem', id: 'LIST' }],
       }),
     createLineItems: build.mutation<Array<GetLineItemResponse>, createLineItem>({
       query: (timeData) => ({
