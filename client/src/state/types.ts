@@ -68,6 +68,7 @@ export interface lineItems {
   	_id: string,
 		startTime: string,
 		stopTime: string,
+    totalEarnings:Number,
 		userIds:Array<string>
 		createdAt: string,
 		updatedAt:string,
@@ -100,7 +101,7 @@ export interface clockIn {
  
 export interface createLineItem {
   id:string;
-  rate:Number;
+  rate:string;
   date: Number;
   startTime:String
 }

@@ -1,6 +1,7 @@
 import express from "express";
 import LineItem from "../models/lineItem.js"; 
 import User from "../models/User.js";
+import { parse } from "dotenv";
 const router = express.Router();
 
 router.get("/getLineItem", async (req, res) => {
@@ -26,6 +27,7 @@ router.get("/findLineItem/:id", async (req, res) => {
 router.post('/createLineItem',async(req,res) => {  
   try{
     const {id  ,rate ,date,startTime} = req.body
+    console.log(rate)
     const user = await User.findById(id) 
     if(user){   
       await LineItem.insertMany([{
@@ -74,20 +76,19 @@ router.post("/totalHours", async (req, res) => {
   const lineItem = await LineItem.findById({'_id':lineItemId})
   const user = await User.findOne({'_id': userId}); 
   function calculateTimeDifference(startTime, endTime) {
-    const currentDate = new Date().toDateString();
-
-    const startDateTime = new Date(`${currentDate} ${startTime}`);
-    const endDateTime = new Date(`${currentDate} ${endTime}`);
-
-    const differenceInMilliseconds = Math.round((endDateTime - startDateTime) / 1000) * 1000;
-
-    const seconds = Math.floor((differenceInMilliseconds / 1000) % 60) ;
-    const minutes = Math.floor((differenceInMilliseconds / 1000 / 60) % 60) 
-    const hours = Math.floor((differenceInMilliseconds / 1000 / 3600) % 24) 
-    const totalTimeWorked = (hours * 3600)+"h"+":"+(minutes * 60)+"m"+":"+seconds+"s";
-    console.log(totalTimeWorked)
-    return totalTimeWorked;
-} 
+  const currentDate = new Date().toDateString();
+  const startDateTime = new Date(`${currentDate} ${startTime}`);
+  const endDateTime = new Date(`${currentDate} ${endTime}`);
+  const differenceInMilliseconds = endDateTime - startDateTime;
+  let seconds = Math.floor((differenceInMilliseconds / 1000) % 60);
+  let minutes = Math.floor((differenceInMilliseconds / 1000 / 60) % 60);
+  let hours = Math.floor(differenceInMilliseconds / 1000 / 3600);
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+  const totalTimeWorked = hours + "h:" + minutes + "m:" + seconds + "s";
+  console.log(totalTimeWorked);
+  return totalTimeWorked;
+}
 
   let T = calculateTimeDifference(lineItem.startTime,lineItem.stopTime)
   const filter = {'_id':lineItemId}
@@ -102,19 +103,44 @@ router.post("/totalHours", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
- 
+
 router.patch('/updateStopTime', async (req, res) => {  
   try {
-    const { lineItemId, stopTime, userId } = req.body;
+    const { lineItemId, stopTime, userId,rate,startTime } = req.body;
+    console.log(req.body)
     const user = await User.findOne({'_id': userId});
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    const updatedLineItem = await LineItem.findOneAndUpdate(
+    
+   function calculateEarnings(startTime, stopTime, rateOfPay) {
+    const currentDate = new Date().toDateString();
+    const startDateTime = new Date(`${currentDate} ${startTime}`);
+    const endDateTime = new Date(`${currentDate} ${stopTime}`);
+    if (isNaN(startDateTime.getTime()) || isNaN(endDateTime.getTime())) {
+        console.error('Invalid start or stop time');
+        return NaN;
+    }
+    const millisecondsPerHour = 1000 * 60 * 60;
+    const hoursWorked = (endDateTime - startDateTime) / millisecondsPerHour;
+    const rateP = parseFloat(rateOfPay);
+    if (isNaN(rateP)) {
+        console.error('Invalid rate of pay');
+        return NaN;
+    }
+    const earnings = hoursWorked * rateP;
+    return earnings;
+}
+    const E = calculateEarnings(startTime,stopTime,rate);
+     const updatedLineItem = await LineItem.findOneAndUpdate(
       { '_id': lineItemId }, 
-      { 'stopTime': stopTime },
+      { 
+      'stopTime': stopTime , 
+      'totalEarnings':E.toFixed(2)
+    },
       { new: true, upsert: false }
     );
+
     const sortedLineItems = await LineItem.find({ 'userIds': userId })
       .sort({ 'createdAt': -1 })
     user.lineItemIds =  sortedLineItems.map(item => item._id);

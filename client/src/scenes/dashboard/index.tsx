@@ -52,7 +52,7 @@ const Dashboard = () => {
        const currentTime = `${hours}:${minutes}:${seconds}`;
        setTime(currentTime); 
      }, 1000); 
-     return () => clearInterval(interval); // Clear the interval to avoid memory leaks
+     return () => clearInterval(interval);  
    }, [punchInTime]);
 
  

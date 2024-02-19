@@ -4,9 +4,7 @@ const Schema = mongoose.Schema;
 
 const DescriptionSchema = new Schema(
   {
-    role: String,
     workDescription: String,
-    mood:String, 
      userIds: [
       {
         type: mongoose.Schema.Types.ObjectId,

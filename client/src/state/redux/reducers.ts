@@ -9,13 +9,13 @@ const initialState = {
 const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
   case USER_INFO:
-    return action.payload; // Assuming payload contains user info
+    return action.payload;  
   case LOG_OUT:
       return  null; 
     case VIEW_LINE:
       return {
         ...state,
-        selctedLines: action.payload, // Consider if you want to merge or replace existing products.
+        selctedLines: action.payload, 
       };
     default:
       return state;
