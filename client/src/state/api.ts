@@ -19,7 +19,7 @@ interface LineItem {
 }
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: localURL }),
+  baseQuery: fetchBaseQuery({ baseUrl: herokuURL }),
   reducerPath: "api",
   tagTypes: ["Descriptions", "LineItem", "GetLineItems", "Month", "Users", "CreateUsers", "GetUsersLogin", "UpdateClockedIn", "CreateLineItem","description"],
   endpoints: (build) => ({
