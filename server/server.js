@@ -29,7 +29,7 @@ app.use(helmet());
 
 // Enable CORS for local development
 const corsOptions = {
-  origin: 'http://localhost:5173', // Allow only your frontend app domain
+  origin: 'https://accrualifytedy.onrender.com', // Allow only your frontend app domain
   optionsSuccessStatus: 200 
 };
 
