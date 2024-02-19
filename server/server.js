@@ -28,12 +28,9 @@ const app = express();
 app.use(helmet()); 
 
 // Enable CORS for local development
-const corsOptions = {
-  origin: 'https://accrualifytedy.onrender.com', // Allow only your frontend app domain
-  optionsSuccessStatus: 200 
-};
+ 
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Request logging
 app.use(morgan("common"));
