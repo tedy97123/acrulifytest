@@ -99,35 +99,38 @@ const TransactionsModal: React.FC<ModernTransactionsModal> = ({ open, onClose  }
                     },
                   }}
                 > 
-                <Card variant="outlined" sx={{ p: 4.55, ml:1}}  >
+                <Card variant="outlined" sx={{ ml:9}}  >
                     <Box >
                       <Stack sx={{ p: 4.55, ml:1}} >
                         <Typography gutterBottom variant="h3"  >
-                          id : {punches?.id}
+                          id  : <Chip color="secondary" label= {punches?.id}  size="small" />
                         </Typography>  
-                      <Typography color="text.secondary" variant="body2">
+                      <Typography color="text.secondary" variant="body3">
                       ClockedIn: {punches?.startTime}
                       </Typography>
-                   <Typography color="text.secondary" variant="body2">
+                   <Typography color="text.secondary" variant="body1">
                       ClockedIn: {punches?.stopTime}
-                      </Typography>
-                       <Typography color="text.secondary" variant="body2">
-                      createdAt: {punches?.createdAt}
-                      </Typography>
-                   <Typography color="text.secondary" variant="body2">
-                      totalEarnings: {punches?.totalEarnings}
-                      </Typography>
+                      </Typography> 
                  </Stack>
                     </Box>
                     <Divider />
-                    <Box sx={{ p: 2 }}>
-                      <Typography gutterBottom variant="body2">
+                    <Box sx={{ p: 2 }}> 
+                      <Stack direction="column" spacing={2}>
+                    <Typography gutterBottom variant="h3">
                        Details:
                       </Typography>
-                      <Stack direction="column" spacing={2}>
+                       <Typography>
+                          Created At  
+                        </Typography>
                         <Chip color="primary" label={punches?.createdAt} size="small" />
+                        <Typography>
+                          Total Earnings  
+                        </Typography>
                         <Chip   size="small"  label={punches?.totalEarnings} />
-                        <Chip  size="small" label={punches?.rate} />
+                        <Typography>
+                          Rate  
+                        </Typography>
+                        <Chip  size="medium" label={punches?.rate} />
                       </Stack>
                     </Box>
                   </Card>
