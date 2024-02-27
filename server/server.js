@@ -10,20 +10,33 @@ import userRoutes from './routes/users.js';
 import descriptionRoutes from "./routes/description.js";
 import loginRoutes from "./routes/login.js"
 import lineItemRoutes from "./routes/lineitem.js"
-
   
 /* CONFIGURATIONS */
 dotenv.config();
-const app = express();
+const app = express(); 
+//  
 // const config = {
-//     authRequired: false,
-//     auth0Logout: true,
-//     secret:process.env.SECRET,
-//     baseURL:process.env.BASEURL,
-//     // clientId:process.env.CLIENT_ID,
-//     issuerBaseURL:process.env.ISSUER_BASEURL,
+//   authRequired: false,
+//   auth0Logout: true,
+//   secret: 'a long, randomly-generated string stored in env',
+//   baseURL: 'http://localhost:5173',
+//   clientID: 'fQOJp6UBM1eEl9qHcm1kC6xNuDUsXzWx',
+//   issuerBaseURL: 'https://dev-tufrtk1ygvvlp4lt.us.auth0.com'
 // };
 
+
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+// app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
+
+// app.get('/profile', requiresAuth(), (req, res) => {
+//   res.send(JSON.stringify(req.oidc.user));
+// });
+ 
 // Use Helmet for general security headers
 app.use(helmet()); 
 
@@ -64,7 +77,7 @@ app.post('/dropDatabase', async function (req, res) {
 })
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 8000;
-const MONGO_URL =  'mongodb+srv://tedyyohanes97:Peeman200@cluster1.vs1vunz.mongodb.net/?retryWrites=true&w=majority'; // Use environment variable for MongoDB URL
+const MONGO_URL =  'mongodb+srv://tedyyohanes97:Peeman200@cluster1.vs1vunz.mongodb.net/acrulifytest'; // Use environment variable for MongoDB URL
  
 mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
